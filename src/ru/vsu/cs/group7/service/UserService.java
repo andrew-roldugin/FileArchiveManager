@@ -1,12 +1,12 @@
 package ru.vsu.cs.group7.service;
 
-import ru.vsu.cs.group7.application.simple_console_app.ApplicationStorage;
+import ru.vsu.cs.group7.application.consoleApp.config.ApplicationStorage;
 import ru.vsu.cs.group7.exception.*;
 import ru.vsu.cs.group7.model.User;
-import ru.vsu.cs.group7.storage.in_memory_storage.FakeFileArchiveStorage;
-import ru.vsu.cs.group7.storage.in_memory_storage.FakeUserStorage;
-import ru.vsu.cs.group7.storage.in_memory_storage.FileArchiveStorage;
-import ru.vsu.cs.group7.storage.in_memory_storage.UserStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileArchiveStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FakeUserStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FileArchiveStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.UserStorage;
 import ru.vsu.cs.group7.validator.UserValidator;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class UserService implements Service {
         this(new FakeUserStorage(), new FakeFileArchiveStorage(), applicationStorage);
     }
 
-    public User createUser(String login, String password) throws Exception {
+    public User createUser(String login, String password) throws UserValidationException, UserAlreadyExistsException {
         User user = new User(login, password);
         UserValidator.validate(user);
         if (userStorage.getOneByLogin(login).isPresent()) {
@@ -39,8 +39,11 @@ public class UserService implements Service {
         return user;
     }
 
-    public List<User> findAll() throws UserNotAuthorizedException {
+    public List<User> findAll(User.RoleEnum requiredRole) throws UserNotAuthorizedException, NotAllowedExceptions {
         applicationStorage.checkLogin();
+        User user = applicationStorage.getUser();
+        if (requiredRole != null && !user.getRole().equals(requiredRole))
+            throw new NotAllowedExceptions(user.getId(), "просматривать всех пользователей");
         return userStorage.getAll().stream().toList();
     }
 
@@ -93,11 +96,11 @@ public class UserService implements Service {
         fileArchiveStorage.removeAllByUserId(userId);
     }
 
-    public void login(User user) throws UserNotFoundException, Exception {
+    public void login(User user) throws UserNotFoundException, PasswordsDoNotMatchException, UserValidationException {
         login(user.getLogin(), user.getPassword());
     }
 
-    public void login(String login, String password) throws UserNotFoundException, Exception {
+    public void login(String login, String password) throws UserNotFoundException, PasswordsDoNotMatchException, UserValidationException {
         User user = new User(login, password);
         UserValidator.validate(user);
 

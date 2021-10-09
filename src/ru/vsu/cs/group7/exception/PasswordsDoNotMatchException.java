@@ -1,6 +1,6 @@
 package ru.vsu.cs.group7.exception;
 
-public class PasswordsDoNotMatchException extends Exception {
+public class PasswordsDoNotMatchException extends ApplicationException {
     public PasswordsDoNotMatchException() {
         super("Пароли не совпадают");
     }

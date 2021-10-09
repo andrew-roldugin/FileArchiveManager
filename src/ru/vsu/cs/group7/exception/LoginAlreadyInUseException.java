@@ -1,6 +1,6 @@
 package ru.vsu.cs.group7.exception;
 
-public class LoginAlreadyInUseException extends Exception {
+public class LoginAlreadyInUseException extends ApplicationException {
     public LoginAlreadyInUseException(String login) {
         super(String.format("Логином %s уже занят", login));
     }

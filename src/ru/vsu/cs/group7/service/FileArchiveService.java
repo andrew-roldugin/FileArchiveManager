@@ -4,9 +4,9 @@ import ru.vsu.cs.group7.exception.NotAllowedExceptions;
 import ru.vsu.cs.group7.exception.UserNotAuthorizedException;
 import ru.vsu.cs.group7.model.FileArchive;
 import ru.vsu.cs.group7.model.User;
-import ru.vsu.cs.group7.application.simple_console_app.ApplicationStorage;
-import ru.vsu.cs.group7.storage.in_memory_storage.FakeFileArchiveStorage;
-import ru.vsu.cs.group7.storage.in_memory_storage.FileArchiveStorage;
+import ru.vsu.cs.group7.application.consoleApp.config.ApplicationStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileArchiveStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FileArchiveStorage;
 
 import java.util.Collection;
 import java.util.Optional;

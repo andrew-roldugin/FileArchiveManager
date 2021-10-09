@@ -1,13 +1,13 @@
 package ru.vsu.cs.group7.service;
 
-import ru.vsu.cs.group7.application.simple_console_app.ApplicationStorage;
+import ru.vsu.cs.group7.application.consoleApp.config.ApplicationStorage;
 import ru.vsu.cs.group7.exception.UserNotAuthorizedException;
 import ru.vsu.cs.group7.model.File;
 import ru.vsu.cs.group7.model.FileArchive;
-import ru.vsu.cs.group7.storage.in_memory_storage.FakeFileArchiveStorage;
-import ru.vsu.cs.group7.storage.in_memory_storage.FakeFileStorage;
-import ru.vsu.cs.group7.storage.in_memory_storage.FileArchiveStorage;
-import ru.vsu.cs.group7.storage.in_memory_storage.FileStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileArchiveStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FileArchiveStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FileStorage;
 
 import java.util.Collection;
 import java.util.Optional;
