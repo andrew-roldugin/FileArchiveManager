@@ -1,6 +1,7 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.menu.common;
 
 import ru.vsu.cs.group7.application.consoleApp.Controller;
+import ru.vsu.cs.group7.exception.ApplicationException;
 
 public class MenuManager {
     private BaseMenu currentMenu;
@@ -33,8 +34,8 @@ public class MenuManager {
 
 //        if (getCurrentMenu() != null)
 
-        if (!(menu instanceof MainMenu))
-            this.currentMenu.printMenu();
+//        if (!(menu instanceof MainMenu))
+//            this.currentMenu.printMenu();
 
         return menu;
     }

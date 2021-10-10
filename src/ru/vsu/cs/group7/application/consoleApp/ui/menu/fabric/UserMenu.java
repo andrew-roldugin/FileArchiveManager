@@ -3,24 +3,18 @@ package ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric;
 import ru.vsu.cs.group7.application.consoleApp.Controller;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.BaseMenu;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
-import ru.vsu.cs.group7.application.consoleApp.ui.pages.FirstPage;
 import ru.vsu.cs.group7.application.consoleApp.ui.pages.user.AllUsersPage;
 import ru.vsu.cs.group7.application.consoleApp.ui.pages.user.EditUserPage;
 import ru.vsu.cs.group7.application.consoleApp.ui.pages.user.LogoutPage;
 import ru.vsu.cs.group7.application.consoleApp.ui.pages.user.RemoveUserPage;
 import ru.vsu.cs.group7.service.Service;
 
-import java.text.Format;
-import java.time.format.FormatStyle;
-
-import static java.lang.StrictMath.abs;
-
 public class UserMenu extends BaseMenu {
 
     public UserMenu(Controller controller, Service userService) {
         super(controller, userService);
         String login = getController().getUser().getLogin();
-        String content = String.format(
+        this.content = String.format(
                 """
                          _________________________________________________________________________________
                         /								 Меню пользователей 							  \\
@@ -32,11 +26,11 @@ public class UserMenu extends BaseMenu {
                         | 3) Удалить учетную запись; 													  |
                         | 4) Выйти;																		  |
                         | 5) -> Перейти в меню архивы;												      |
-                        |               ___________________________________________________               |
+                        |				___________________________________________________               |
                         | 0) Завершение работы															  |
                         |_________________________________________________________________________________|
-                        """, login + "\t".repeat((int) Math.round((double) ((66 - login.length()) / 4))) + " ".repeat(2));
-        setCurrentPage(new FirstPage(this, content));
+                        """, login + " ".repeat(66 - login.length())); //+ "\t".repeat((int) StrictMath.round((66 - login.length()) / 4.)) + " ".repeat(2));
+//        setCurrentPage(new FirstPage(this, content));
     }
 
     @Override

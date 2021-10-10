@@ -1,6 +1,7 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.menu.common;
 
 import ru.vsu.cs.group7.application.consoleApp.Controller;
+import ru.vsu.cs.group7.exception.ApplicationException;
 
 public class MainMenu extends BaseMenu {
 
@@ -25,6 +26,6 @@ public class MainMenu extends BaseMenu {
 
     @Override
     public void onSelect(Integer choice) {
-        getController().getMenuManager().getCurrentMenu().onSelect(choice);
+//        getController().getMenuManager().getCurrentMenu().onSelect(choice);
     }
 }

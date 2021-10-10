@@ -3,51 +3,52 @@ package ru.vsu.cs.group7.application.consoleApp.ui.pages;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.BaseMenu;
 import ru.vsu.cs.group7.exception.ApplicationException;
-import ru.vsu.cs.group7.exception.NotAllowedExceptions;
-import ru.vsu.cs.group7.exception.UserNotAuthorizedException;
 
 import java.util.Scanner;
-import java.util.function.Consumer;
 
 public abstract class Page {
-    private String content;
-    private Consumer<Void> action;
+    private final String header;
+    //    private Consumer<Void> action;
     private final Scanner scanner;
     private final BaseMenu parentMenu;
+    protected boolean isWait;
 
-    public Page(BaseMenu parentMenu, String content) {
-        this.content = content;
+    public Page(BaseMenu parentMenu, String header) {
+        this.header = header;
         this.scanner = parentMenu.getController().getScanner();
         this.parentMenu = parentMenu;
     }
 
-    public void show(String msg){
-        System.out.println(msg);
-        if (this.action != null)
-            this.action.accept(null);
+    public abstract void openPage() throws ApplicationException;
+
+    public void show() throws ApplicationException {
+        System.out.println(header);
+        openPage();
+//        try {
+//            openPage();
+//        } catch (ApplicationException e) {
+//            System.out.println(e.getMessage() + '\n');
+//
+//            System.out.println("Для продолжения введите любой символ...");
+//            scanner.next();
+//        }
     }
 
-//    public abstract void openPage() throws ApplicationException;
-    
-    public void show() {
-        show(content);
-    }
+//    public String getContent() {
+//        return content;
+//    }
+//
+//    public void setContent(String content) {
+//        this.content = content;
+//    }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Consumer<Void> getAction() {
-        return action;
-    }
-
-    public void setAction(Consumer<Void> action) {
-        this.action = action;
-    }
+//    public Consumer<Void> getAction() {
+//        return action;
+//    }
+//
+//    public void setAction(Consumer<Void> action) {
+//        this.action = action;
+//    }
 
     public BaseMenu getParentMenu() {
         return parentMenu;
@@ -65,13 +66,7 @@ public abstract class Page {
         return scanner;
     }
 
-    public void exit() {
-        try {
-            System.out.println("Завершение работы...");
-            Thread.sleep(500);
-            System.exit(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public boolean getIsWait() {
+        return isWait;
     }
 }

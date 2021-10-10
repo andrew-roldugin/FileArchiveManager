@@ -3,9 +3,6 @@ package ru.vsu.cs.group7.application.consoleApp;
 import ru.vsu.cs.group7.application.Application;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.BaseMenu;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 public class ConsoleApp implements Application {
     private final Controller controller = new Controller();
 
@@ -13,21 +10,31 @@ public class ConsoleApp implements Application {
     public void start(String[] args) {
 
         while (true) {
-            Integer choice = null;
             getCurrentMenu().printMenu();
-            try {
-                choice = getCurrentMenu().getChoice();
-            } catch (InputMismatchException ex) {
-                System.out.println("Некорректный ввод при выборе пункта. Ожидалось число");
-                controller.setScanner(new Scanner(System.in));
-//                choice = null;
-            }
-            if (choice != null) {
-                getCurrentMenu().onSelect(choice);
-
-//                getCurrentMenu().printMenu();
-            }
         }
+//            while (true) {
+//            Integer choice = null;
+//            try {
+//                getCurrentMenu().printMenu();
+//            } catch (ApplicationException e) {
+//                System.out.println(e.getMessage() + '\n');
+//                System.out.println("Для продолжения введите любой символ...");
+//                controller.getScanner().next();
+//                controller.getMenuManager().getCurrentMenu().setCurrentPage(null);
+//            }
+//            try {
+//                choice = getCurrentMenu().getChoice();
+//            } catch (InputMismatchException ex) {
+//                System.out.println("Некорректный ввод при выборе пункта. Ожидалось число");
+//                controller.setScanner(new Scanner(System.in));
+////                choice = null;
+//            }
+//            if (choice != null) {
+//                getCurrentMenu().onSelect(choice);
+//
+////                getCurrentMenu().printMenu();
+//            }
+//        }
     }
 
     public BaseMenu getCurrentMenu() {

@@ -55,11 +55,11 @@ public class UserService implements Service {
         return userStorage.getOneById(id).orElseThrow(() -> new UserNotFoundException("с id", id.toString()));
     }
 
-    public User update(String newLogin, String newPassword) throws Exception {
+    public User update(String newLogin, String newPassword) throws UserValidationException, UserNotAuthorizedException, LoginAlreadyInUseException {
         return update(applicationStorage.getUser().getId(), newLogin, newPassword);
     }
 
-    public User update(UUID id, String newLogin, String newPassword) throws Exception {
+    public User update(UUID id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException {
         applicationStorage.checkLogin();
 
         User newUser = new User(id, newLogin, newPassword);
@@ -92,6 +92,8 @@ public class UserService implements Service {
     private void remove(UUID id) throws UserNotAuthorizedException, UserNotFoundException {
         applicationStorage.checkLogin();
         UUID userId = getOneUserById(id).getId();
+        if (userId.equals(applicationStorage.getUser().getId()))
+            applicationStorage.setUser(null);
         userStorage.removeById(userId);
         fileArchiveStorage.removeAllByUserId(userId);
     }

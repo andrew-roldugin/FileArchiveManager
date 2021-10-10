@@ -14,25 +14,26 @@ public class CreateUserPage extends UserPages {
         super(authMenu,
                 "====================================== Регистрация ======================================"
         );
-        setAction((input) -> {
-            System.out.print("Введите логин: ");
-            String login = getScanner().next();
-            System.out.print("Введите пароль: ");
-            String password = getScanner().next();
-
-            try {
-                User user = getUserService().createUser(login, password);
-                getUserService().login(user);
-                System.out.println("Успешно\n");
-                backToMenu(authMenu, MenusEnum.UserMenu, false);
-//                authMenu.getController().getMenuManager().switchMenu(MenusEnum.UserMenu, authMenu.getController());
-            } catch (ApplicationException e) {
-                System.out.println(e.getMessage() + "\n");
-                authMenu.printMenu();
-            }
-        });
+//        setAction((input) -> {
+//            System.out.print("Введите логин: ");
+//            String login = getScanner().next();
+//            System.out.print("Введите пароль: ");
+//            String password = getScanner().next();
+//
+//            try {
+//                User user = getUserService().createUser(login, password);
+//                getUserService().login(user);
+//                System.out.println("Успешно\n");
+//                backToMenu(authMenu, MenusEnum.UserMenu, false);
+////                authMenu.getController().getMenuManager().switchMenu(MenusEnum.UserMenu, authMenu.getController());
+//            } catch (ApplicationException e) {
+//                System.out.println(e.getMessage() + "\n");
+////                authMenu.printMenu();
+//            }
+//        });
     }
 
+    @Override
     public void openPage() throws ApplicationException {
         System.out.print("Введите логин: ");
         String login = getScanner().next();
@@ -42,6 +43,6 @@ public class CreateUserPage extends UserPages {
         User user = getUserService().createUser(login, password);
         getUserService().login(user);
         System.out.println("Успешно\n");
-        backToMenu(getParentMenu(), MenusEnum.UserMenu, false);
+        backToMenu(getParentMenu(), MenusEnum.UserMenu, getIsWait());
     }
 }

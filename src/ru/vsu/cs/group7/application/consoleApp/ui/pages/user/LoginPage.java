@@ -9,21 +9,33 @@ public class LoginPage extends UserPages {
 
     public LoginPage(AuthMenu authMenu) {
         super(authMenu, "====================================== Авторизация ======================================");
-        setAction((input) -> {
-            System.out.print("Введите логин: ");
-            String login = getScanner().next();
-            System.out.print("Введите пароль: ");
-            String password = getScanner().next();
+//        setAction((input) -> {
+//            System.out.print("Введите логин: ");
+//            String login = getScanner().next();
+//            System.out.print("Введите пароль: ");
+//            String password = getScanner().next();
+//
+//            try {
+//                getUserService().login(login, password);
+//                System.out.println("Успешно\n");
+//                backToMenu(authMenu, MenusEnum.UserMenu, false);
+////                authMenu.getController().getMenuManager().switchMenu(MenusEnum.UserMenu, authMenu.getController());
+//            } catch (ApplicationException e) {
+//                System.out.println(e.getMessage() + "\n");
+////                authMenu.printMenu();
+//            }
+//        });
+    }
 
-            try {
-                getUserService().login(login, password);
-                System.out.println("Успешно\n");
-                backToMenu(authMenu, MenusEnum.UserMenu, false);
-//                authMenu.getController().getMenuManager().switchMenu(MenusEnum.UserMenu, authMenu.getController());
-            } catch (ApplicationException e) {
-                System.out.println(e.getMessage() + "\n");
-                authMenu.printMenu();
-            }
-        });
+    @Override
+    public void openPage() throws ApplicationException {
+        System.out.print("Введите логин: ");
+        String login = getScanner().next();
+        System.out.print("Введите пароль: ");
+        String password = getScanner().next();
+
+        getUserService().login(login, password);
+        System.out.println("Успешно\n");
+        backToMenu(getParentMenu(), MenusEnum.UserMenu, getIsWait());
     }
 }
