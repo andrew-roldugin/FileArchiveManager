@@ -28,8 +28,8 @@ public abstract class BaseMenu {
                 if (getCurrentPage().getIsWait()) {
                     System.out.println("Для продолжения введите любой символ...");
                     controller.getScanner().next();
+                    setCurrentPage(null);
                 }
-                setCurrentPage(null);
             }
         } else {
             System.out.println(content);

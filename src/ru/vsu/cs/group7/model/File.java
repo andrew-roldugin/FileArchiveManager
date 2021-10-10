@@ -1,6 +1,8 @@
 package ru.vsu.cs.group7.model;
 
 import java.util.Date;
+import java.util.Optional;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 public class File implements Storeable {
@@ -16,9 +18,10 @@ public class File implements Storeable {
         this.id = id;
         this.name = name;
         this.size = size;
-        this.extension = extension;
+//        this.extension = extension;
         this.appendTime = appendTime;
         this.fileArchive = fileArchive;
+        setExtension(name);
     }
 
 //    public File(String name, Integer size) {
@@ -27,7 +30,7 @@ public class File implements Storeable {
 
 
     public File(String name, FileArchive fileArchive) {
-        this(UUID.randomUUID(), fileArchive, name, 0, name.split("\\.")[1], new Date());
+        this(UUID.randomUUID(), fileArchive, name, 0, null, new Date());
     }
 
     public UUID getId() {
@@ -41,7 +44,7 @@ public class File implements Storeable {
     public void setName(String name) {
         if (name != null && !name.isBlank()) {
             this.name = name;
-            this.extension = name.split("\\.")[1];
+            setExtension(name);
         }
     }
 
@@ -51,6 +54,10 @@ public class File implements Storeable {
 
     public String getExtension() {
         return extension;
+    }
+
+    private void setExtension(String name) {
+        this.extension = Optional.of(name.split("\\.")[1]).orElse("");
     }
 
     public Date getAppendTime() {
@@ -81,5 +88,15 @@ public class File implements Storeable {
 //        result = 31 * result + size.hashCode();
         result = 31 * result + extension.hashCode();
         return result;
+    }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(id).append("\t");
+        sb.append(name).append('\t');
+        sb.append(appendTime).append('\t');
+        return sb.toString();
     }
 }

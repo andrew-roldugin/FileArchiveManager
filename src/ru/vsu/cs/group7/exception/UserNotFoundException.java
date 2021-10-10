@@ -6,6 +6,6 @@ public class UserNotFoundException extends ApplicationException {
     }
 
     public UserNotFoundException(String login) {
-        this(login, "с логином");
+        this("с логином", login);
     }
 }

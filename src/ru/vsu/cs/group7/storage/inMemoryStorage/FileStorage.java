@@ -10,5 +10,6 @@ import java.util.UUID;
 public interface FileStorage extends Storage<File> {
     Optional<File> getFileByName(String fileName);
     Optional<File> getFilesInFileArchive(UUID fileArchiveId);
-    void fromCollection(Collection<File> files);
+    Optional<File> getFilesInFileArchive(String fileArchiveName);
+//    void fromCollection(Collection<File> files);
 }

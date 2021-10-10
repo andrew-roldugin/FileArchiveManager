@@ -1,7 +1,6 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.menu.common;
 
 import ru.vsu.cs.group7.application.consoleApp.Controller;
-import ru.vsu.cs.group7.exception.ApplicationException;
 
 public class MainMenu extends BaseMenu {
 
@@ -11,16 +10,13 @@ public class MainMenu extends BaseMenu {
 
     @Override
     public void printMenu() {
-        BaseMenu newMenu;
         if (getController().isLoggedIn())
-            newMenu = switchMenu(MenusEnum.UserMenu);
+            switchMenu(MenusEnum.UserMenu);
         else
-            newMenu = switchMenu(MenusEnum.AuthMenu);
-
-//        newMenu.printMenu();
+            switchMenu(MenusEnum.AuthMenu);
     }
 
-    private BaseMenu switchMenu(MenusEnum menu){
+    private BaseMenu switchMenu(MenusEnum menu) {
         return getController().getMenuManager().switchMenu(menu, getController());
     }
 

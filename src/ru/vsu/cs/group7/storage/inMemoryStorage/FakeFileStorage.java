@@ -25,14 +25,20 @@ public class FakeFileStorage extends FakeStorage<File> implements FileStorage {
 
     public Optional<File> getFilesInFileArchive(UUID fileArchiveId) {
         return storage.stream()
-                .filter(f -> f.getId().equals(fileArchiveId))
+                .filter(f -> f.getFileArchive().getId().equals(fileArchiveId))
                 .findAny();
     }
 
-    @Override
-    public void fromCollection(Collection<File> files) {
-        storage.addAll(files);
+    public Optional<File> getFilesInFileArchive(String archiveName) {
+        return storage.stream()
+                .filter(f -> f.getFileArchive().getName().equals(archiveName))
+                .findAny();
     }
+
+//    @Override
+//    public void fromCollection(Collection<File> files) {
+//        storage.addAll(files);
+//    }
 
     @Override
     public void updateById(File newData) {

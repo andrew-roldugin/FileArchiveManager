@@ -20,6 +20,10 @@ public class FileArchive implements Storeable {
 //        this.files = new HashSet<>();
     }
 
+    public FileArchive(UUID id, String name, User owner) {
+        this(id, name, new Date(), new Date(), owner);
+    }
+
     public FileArchive(String name, User owner) {
         this(UUID.randomUUID(), name, new Date(), new Date(), owner);
     }

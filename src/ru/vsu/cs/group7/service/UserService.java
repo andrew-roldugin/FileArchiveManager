@@ -89,9 +89,9 @@ public class UserService implements Service {
         remove(userId);
     }
 
-    private void remove(UUID id) throws UserNotAuthorizedException, UserNotFoundException {
+    private void remove(UUID userId) throws UserNotAuthorizedException {
         applicationStorage.checkLogin();
-        UUID userId = getOneUserById(id).getId();
+//        UUID userId = getOneUserById(id).getId();
         if (userId.equals(applicationStorage.getUser().getId()))
             applicationStorage.setUser(null);
         userStorage.removeById(userId);
@@ -118,5 +118,9 @@ public class UserService implements Service {
     public void logout() {
         if (applicationStorage.isLoggedIn())
             applicationStorage.setUser(null);
+    }
+
+    public ApplicationStorage getApplicationStorage() {
+        return applicationStorage;
     }
 }

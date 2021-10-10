@@ -5,6 +5,7 @@ import ru.vsu.cs.group7.storage.Storage;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public abstract class FakeStorage<T extends Storeable> implements Storage<T> {
     protected Collection<T> storage;
@@ -32,7 +33,9 @@ public abstract class FakeStorage<T extends Storeable> implements Storage<T> {
 
     @Override
     public void removeById(UUID id) {
-        getOneById(id).ifPresent(storage::remove);
+        storage = storage.stream()
+                .filter(item -> !item.getId().equals(id))
+                .collect(Collectors.toSet());
 //        T value = getOneById(id)
 //                .orElseThrow(() -> new NotFoundException(String.format("По id %s ничего не найдено", id.toString())));
 //        storage.remove(value);

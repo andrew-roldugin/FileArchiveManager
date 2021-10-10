@@ -30,7 +30,6 @@ public class UserMenu extends BaseMenu {
                         | 0) Завершение работы															  |
                         |_________________________________________________________________________________|
                         """, login + " ".repeat(66 - login.length())); //+ "\t".repeat((int) StrictMath.round((66 - login.length()) / 4.)) + " ".repeat(2));
-//        setCurrentPage(new FirstPage(this, content));
     }
 
     @Override

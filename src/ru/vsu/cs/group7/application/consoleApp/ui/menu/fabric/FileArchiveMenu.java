@@ -35,12 +35,12 @@ public class FileArchiveMenu extends BaseMenu {
         switch (choice) {
             case 0 -> exit();
 
-            case 1 -> new AllArchivesPage(this);
-            case 2 -> new UpdateArchivePage(this);
-            case 3 -> new RemoveArchivePage(this);
-            case 4 -> new CreateArchivePage(this);
-            case 5 -> getCurrentPage().backToMenu(this, MenusEnum.FileMenu, false);
-            case 6 -> getCurrentPage().backToMenu(this, MenusEnum.UserMenu, false);
+            case 1 -> setCurrentPage(new AllArchivesPage(this));
+            case 2 -> setCurrentPage(new UpdateArchivePage(this));
+            case 3 -> setCurrentPage(new RemoveArchivePage(this));
+            case 4 -> setCurrentPage(new CreateArchivePage(this));
+            case 5 -> getController().getMenuManager().switchMenu(MenusEnum.FileMenu, getController());// getCurrentPage().backToMenu(this, MenusEnum.FileMenu, false);
+            case 6 -> getController().getMenuManager().switchMenu(MenusEnum.UserMenu, getController()); //getCurrentPage().backToMenu(this, MenusEnum.UserMenu, false);
         }
     }
 }

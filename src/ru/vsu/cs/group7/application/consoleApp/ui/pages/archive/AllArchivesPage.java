@@ -3,7 +3,7 @@ package ru.vsu.cs.group7.application.consoleApp.ui.pages.archive;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileArchiveMenu;
 import ru.vsu.cs.group7.exception.ApplicationException;
 
-public class AllArchivesPage extends ArchivePages {
+public class AllArchivesPage extends ArchivesPages {
     public AllArchivesPage(FileArchiveMenu parentMenu) {
         super(parentMenu, "=========================== Информация обо всех архивах ===========================");
 //        setAction((input) -> {
