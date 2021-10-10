@@ -9,4 +9,8 @@ public class NotAllowedExceptions extends ApplicationException {
     public NotAllowedExceptions(UUID userId, String action) {
         super(String.format("Пользователю с id=%s запрещено %s", userId, action));
     }
+
+    public NotAllowedExceptions() {
+        super("Вам заперщено выполнять это действие");
+    }
 }

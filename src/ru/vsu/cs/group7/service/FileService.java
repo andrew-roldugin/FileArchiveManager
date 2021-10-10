@@ -55,7 +55,7 @@ public class FileService implements Service {
         FileArchive fileArchive = fileArchiveOptional.get();
         User owner = fileArchive.getOwner();
         if (!owner.getId().equals(applicationStorage.getUser().getId()) && !owner.getRole().equals(User.RoleEnum.Admin))
-            throw new NotAllowedExceptions(null, null, "");
+            throw new NotAllowedExceptions();
 
         names.stream()
                 .map(name -> new File(name, fileArchive))

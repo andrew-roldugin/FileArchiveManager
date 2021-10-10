@@ -55,11 +55,11 @@ public class UserService implements Service {
         return userStorage.getOneById(id).orElseThrow(() -> new UserNotFoundException("с id", id.toString()));
     }
 
-    public User update(String newLogin, String newPassword) throws UserValidationException, UserNotAuthorizedException, LoginAlreadyInUseException {
+    public User update(String newLogin, String newPassword) throws UserValidationException, UserNotAuthorizedException, LoginAlreadyInUseException, NotAllowedExceptions {
         return update(applicationStorage.getUser().getId(), newLogin, newPassword);
     }
 
-    public User update(UUID id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException {
+    public User update(UUID id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions {
         applicationStorage.checkLogin();
 
         User newUser = new User(id, newLogin, newPassword);
@@ -69,29 +69,35 @@ public class UserService implements Service {
         if (oneByLogin.isPresent())
             throw new LoginAlreadyInUseException(newLogin);
 
+        if (!applicationStorage.getUser().getId().equals(id) && !applicationStorage.getUser().getRole().equals(User.RoleEnum.Admin))
+            throw new NotAllowedExceptions();
+
         userStorage.updateById(newUser);
         applicationStorage.setUser(newUser);
         return newUser;
     }
 
-    public void removeUserByLogin(String login) throws UserNotAuthorizedException, UserNotFoundException {
+    public void removeUserByLogin(String login) throws UserNotAuthorizedException, UserNotFoundException, NotAllowedExceptions {
         UUID userId = getOneUserByLogin(login).getId();
         remove(userId);
     }
 
-    public void removeUserById(UUID id) throws UserNotAuthorizedException, UserNotFoundException {
+    public void removeUserById(UUID id) throws UserNotAuthorizedException, UserNotFoundException, NotAllowedExceptions {
         UUID userId = getOneUserById(id).getId();
         remove(userId);
     }
 
-    public void removeUser() throws UserNotAuthorizedException, UserNotFoundException {
+    public void removeUser() throws UserNotAuthorizedException, NotAllowedExceptions {
         UUID userId = applicationStorage.getUser().getId();
         remove(userId);
     }
 
-    private void remove(UUID userId) throws UserNotAuthorizedException {
+    private void remove(UUID userId) throws UserNotAuthorizedException, NotAllowedExceptions {
         applicationStorage.checkLogin();
 //        UUID userId = getOneUserById(id).getId();
+        if (!applicationStorage.getUser().getId().equals(userId) && !applicationStorage.getUser().getRole().equals(User.RoleEnum.Admin))
+            throw new NotAllowedExceptions();
+
         if (userId.equals(applicationStorage.getUser().getId()))
             applicationStorage.setUser(null);
         userStorage.removeById(userId);
