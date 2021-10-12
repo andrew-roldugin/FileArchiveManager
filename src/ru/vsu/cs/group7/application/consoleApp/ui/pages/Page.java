@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public abstract class Page {
     private final String header;
-    //    private Consumer<Void> action;
     private final Scanner scanner;
     private final BaseMenu parentMenu;
     protected boolean isWait;
@@ -34,21 +33,6 @@ public abstract class Page {
 //        }
     }
 
-//    public String getContent() {
-//        return content;
-//    }
-//
-//    public void setContent(String content) {
-//        this.content = content;
-//    }
-
-//    public Consumer<Void> getAction() {
-//        return action;
-//    }
-//
-//    public void setAction(Consumer<Void> action) {
-//        this.action = action;
-//    }
 
     public BaseMenu getParentMenu() {
         return parentMenu;
@@ -57,9 +41,9 @@ public abstract class Page {
     public void backToMenu(BaseMenu currMenu, MenusEnum backTo, boolean wait) {
         if (wait) {
             System.out.println("Для возврата в меню введите любой символ...");
-            currMenu.getController().getScanner().next();
+            scanner.next();
         }
-        currMenu.getController().getMenuManager().switchMenu(backTo, currMenu.getController());
+        currMenu.switchMenu(backTo);
     }
 
     public Scanner getScanner() {

@@ -39,7 +39,7 @@ public class UserMenu extends BaseMenu {
             case 2 -> setCurrentPage(new EditUserPage(this));
             case 3 -> setCurrentPage(new RemoveUserPage(this));
             case 4 -> setCurrentPage(new LogoutPage(this));
-            case 5 -> getController().getMenuManager().switchMenu(MenusEnum.FileArchiveMenu, getController());
+            case 5 -> switchMenu(MenusEnum.FileArchiveMenu); //getController().getMenuManager().switchMenu(MenusEnum.FileArchiveMenu, getController());
             case 0 -> exit();
         }
     }

@@ -3,6 +3,9 @@ package ru.vsu.cs.group7.application.consoleApp;
 import ru.vsu.cs.group7.application.Application;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.BaseMenu;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class ConsoleApp implements Application {
     private final Controller controller = new Controller();
 
@@ -11,6 +14,14 @@ public class ConsoleApp implements Application {
 
         while (true) {
             getCurrentMenu().printMenu();
+
+//            try {
+//                getCurrentMenu().printMenu();
+//            } catch (InputMismatchException ex) {
+//                System.out.println("Некорректный ввод при выборе пункта. Ожидалось число");
+//                controller.setScanner(new Scanner(System.in));
+//                continue;
+//            }
         }
 //            while (true) {
 //            Integer choice = null;

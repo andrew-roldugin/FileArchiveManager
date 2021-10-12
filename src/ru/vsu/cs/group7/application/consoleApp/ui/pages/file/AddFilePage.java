@@ -17,18 +17,32 @@ public class AddFilePage extends FilesPages {
 
     @Override
     public void openPage() throws ApplicationException {
-        System.out.println("Введите id или имя архива");
+        System.out.print("Введите id архива: ");
         String input = getScanner().next();
-        System.out.println("Теперь введите имена файлов через пробел");
-        String listOfFiles = getScanner().next();
+        getScanner().nextLine();
+        System.out.print("Теперь введите имена файлов через пробел: ");
+        String listOfFiles = getScanner().nextLine();
 
         List<String> names = Arrays.stream(listOfFiles.split(" ")).toList();
         try {
             getFileService().addNewFiles(UUID.fromString(input), names);
-        } catch (InputMismatchException ex) {
-            getFileService().addNewFiles(input, names);
-        } finally {
             backToMenu(getParentMenu(), MenusEnum.FileMenu, getIsWait());
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
         }
+
+//        System.out.println("Введите id или имя архива");
+//        String input = getScanner().next();
+//        System.out.println("Теперь введите имена файлов через пробел");
+//        String listOfFiles = getScanner().next();
+//
+//        List<String> names = Arrays.stream(listOfFiles.split(" ")).toList();
+//        try {
+//            getFileService().addNewFiles(UUID.fromString(input), names);
+//        } catch (InputMismatchException ex) {
+//            getFileService().addNewFiles(input, names);
+//        } finally {
+//            backToMenu(getParentMenu(), MenusEnum.FileMenu, getIsWait());
+//        }
     }
 }

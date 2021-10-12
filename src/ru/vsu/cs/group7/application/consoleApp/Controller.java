@@ -1,24 +1,23 @@
 package ru.vsu.cs.group7.application.consoleApp;
 
-import ru.vsu.cs.group7.application.consoleApp.config.ApplicationStorage;
+import ru.vsu.cs.group7.application.consoleApp.config.ApplicationContext;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenuManager;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.config.Services;
-import ru.vsu.cs.group7.exception.ApplicationException;
 import ru.vsu.cs.group7.model.User;
 
 import java.util.Scanner;
 
 public class Controller {
     private Scanner scanner;
-//    private static User user;
+    //    private static User user;
     private final Services services;
-    private final ApplicationStorage applicationStorage = new ApplicationStorage();
+    private final ApplicationContext context = new ApplicationContext();
     private final MenuManager menuManager = new MenuManager(MenusEnum.MainMenu, this);
 
     public Controller() {
         this.scanner = new Scanner(System.in);
-        this.services = new Services(applicationStorage);
+        this.services = new Services(context);
 //        this.applicationStorage = applicationStorage;
 //        services.getUserService().setAppStorage(applicationStorage);
     }
@@ -32,7 +31,7 @@ public class Controller {
     }
 
     public MenuManager getMenuManager() {
-        return this.menuManager;
+        return menuManager;
     }
 
     public Services getServices() {
@@ -40,11 +39,14 @@ public class Controller {
     }
 
     public User getUser() {
-        return applicationStorage.getUser();
+        return context.getUser();
+    }
+
+    public ApplicationContext getContext() {
+        return context;
     }
 
     public boolean isLoggedIn() {
-        return getUser() != null;
+        return context.isLoggedIn();
     }
-
 }

@@ -14,22 +14,17 @@ public class UpdateFilePage extends FilesPages {
 
     @Override
     public void openPage() throws ApplicationException {
-        System.out.println("Введите id или имя файла");
+        System.out.print("Введите id файла: ");
         String input = getScanner().next();
-        System.out.println("Теперь введите новое имя файла");
+        System.out.print("Теперь введите новое имя файла: ");
         String newName = getScanner().next();
 
-        final UUID[] fileId = {null};
         try {
-            fileId[0] = UUID.fromString(input);
-        } catch (InputMismatchException ex) {
-            getFileService().getFileByName(input).ifPresent(file -> {
-                fileId[0] = file.getId();
-            });
-        } finally {
-            if (fileId[0] != null)
-                getFileService().updateById(fileId[0], newName);
+            UUID fileId = UUID.fromString(input);
+            getFileService().updateById(fileId, newName);
             backToMenu(getParentMenu(), MenusEnum.FileMenu, getIsWait());
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }

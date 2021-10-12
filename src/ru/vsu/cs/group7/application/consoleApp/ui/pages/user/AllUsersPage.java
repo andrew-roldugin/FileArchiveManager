@@ -1,6 +1,5 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.pages.user;
 
-import ru.vsu.cs.group7.application.consoleApp.config.ApplicationStorage;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.UserMenu;
 import ru.vsu.cs.group7.exception.NotAllowedExceptions;

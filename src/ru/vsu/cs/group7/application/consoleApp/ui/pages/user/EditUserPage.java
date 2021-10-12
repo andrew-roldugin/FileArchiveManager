@@ -1,6 +1,5 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.pages.user;
 
-import ru.vsu.cs.group7.application.consoleApp.config.ApplicationStorage;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.UserMenu;
 import ru.vsu.cs.group7.exception.ApplicationException;
@@ -33,11 +32,11 @@ public class EditUserPage extends UserPages {
     @Override
     public void openPage() throws ApplicationException {
         UUID userId = null;
-        if (getUserService().getApplicationStorage().getUser().getRole().equals(User.RoleEnum.Admin)){
+        if (getUserService().getApplicationContext().getUser().getRole().equals(User.RoleEnum.Admin)) {
             System.out.print("Введите id пользователя: ");
             try {
                 userId = UUID.fromString(getScanner().next());
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 return;
             }

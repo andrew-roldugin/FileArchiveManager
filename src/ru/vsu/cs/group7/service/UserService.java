@@ -1,6 +1,6 @@
 package ru.vsu.cs.group7.service;
 
-import ru.vsu.cs.group7.application.consoleApp.config.ApplicationStorage;
+import ru.vsu.cs.group7.application.consoleApp.config.ApplicationContext;
 import ru.vsu.cs.group7.exception.*;
 import ru.vsu.cs.group7.model.User;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileArchiveStorage;
@@ -17,16 +17,16 @@ public class UserService implements Service {
 
     private final UserStorage userStorage;
     private final FileArchiveStorage fileArchiveStorage;
-    private final ApplicationStorage applicationStorage;
+    private final ApplicationContext context;
 
-    public UserService(UserStorage userStorage, FileArchiveStorage fileArchiveStorage, ApplicationStorage applicationStorage) {
+    public UserService(UserStorage userStorage, FileArchiveStorage fileArchiveStorage, ApplicationContext context) {
         this.userStorage = userStorage;
         this.fileArchiveStorage = fileArchiveStorage;
-        this.applicationStorage = applicationStorage;
+        this.context = context;
     }
 
-    public UserService(ApplicationStorage applicationStorage) {
-        this(new FakeUserStorage(), new FakeFileArchiveStorage(), applicationStorage);
+    public UserService(ApplicationContext context) {
+        this(new FakeUserStorage(), new FakeFileArchiveStorage(), context);
     }
 
     public User createUser(String login, String password) throws UserValidationException, UserAlreadyExistsException {
@@ -40,9 +40,9 @@ public class UserService implements Service {
     }
 
     public List<User> findAll(User.RoleEnum requiredRole) throws UserNotAuthorizedException, NotAllowedExceptions {
-        applicationStorage.checkLogin();
-        User user = applicationStorage.getUser();
-        if (requiredRole != null && !user.getRole().equals(requiredRole))
+        context.checkLogin();
+        User user = context.getUser();
+        if (!user.getRole().equals(requiredRole))
             throw new NotAllowedExceptions(user.getId(), "просматривать всех пользователей");
         return userStorage.getAll().stream().toList();
     }
@@ -56,11 +56,11 @@ public class UserService implements Service {
     }
 
     public User update(String newLogin, String newPassword) throws UserValidationException, UserNotAuthorizedException, LoginAlreadyInUseException, NotAllowedExceptions {
-        return update(applicationStorage.getUser().getId(), newLogin, newPassword);
+        return update(context.getUser().getId(), newLogin, newPassword);
     }
 
     public User update(UUID id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions {
-        applicationStorage.checkLogin();
+        context.checkLogin();
 
         User newUser = new User(id, newLogin, newPassword);
         UserValidator.validate(newUser);
@@ -69,11 +69,11 @@ public class UserService implements Service {
         if (oneByLogin.isPresent())
             throw new LoginAlreadyInUseException(newLogin);
 
-        if (!applicationStorage.getUser().getId().equals(id) && !applicationStorage.getUser().getRole().equals(User.RoleEnum.Admin))
+        if (!context.getUser().getId().equals(id) && !context.getUser().getRole().equals(User.RoleEnum.Admin))
             throw new NotAllowedExceptions();
 
         userStorage.updateById(newUser);
-        applicationStorage.setUser(newUser);
+        context.setUser(newUser);
         return newUser;
     }
 
@@ -88,18 +88,18 @@ public class UserService implements Service {
     }
 
     public void removeUser() throws UserNotAuthorizedException, NotAllowedExceptions {
-        UUID userId = applicationStorage.getUser().getId();
+        UUID userId = context.getUser().getId();
         remove(userId);
     }
 
     private void remove(UUID userId) throws UserNotAuthorizedException, NotAllowedExceptions {
-        applicationStorage.checkLogin();
+        context.checkLogin();
 //        UUID userId = getOneUserById(id).getId();
-        if (!applicationStorage.getUser().getId().equals(userId) && !applicationStorage.getUser().getRole().equals(User.RoleEnum.Admin))
+        if (!context.getUser().getId().equals(userId) && !context.getUser().getRole().equals(User.RoleEnum.Admin))
             throw new NotAllowedExceptions();
 
-        if (userId.equals(applicationStorage.getUser().getId()))
-            applicationStorage.setUser(null);
+        if (userId.equals(context.getUser().getId()))
+            context.setUser(null);
         userStorage.removeById(userId);
         fileArchiveStorage.removeAllByUserId(userId);
     }
@@ -118,15 +118,15 @@ public class UserService implements Service {
         if (!oneByLogin.get().getPassword().equals(password))
             throw new PasswordsDoNotMatchException();
 
-        applicationStorage.setUser(oneByLogin.get());
+        context.setUser(oneByLogin.get());
     }
 
     public void logout() {
-        if (applicationStorage.isLoggedIn())
-            applicationStorage.setUser(null);
+        if (context.isLoggedIn())
+            context.setUser(null);
     }
 
-    public ApplicationStorage getApplicationStorage() {
-        return applicationStorage;
+    public ApplicationContext getApplicationContext() {
+        return context;
     }
 }

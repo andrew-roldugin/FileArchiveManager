@@ -5,7 +5,7 @@ import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileMenu;
 import ru.vsu.cs.group7.exception.ApplicationException;
 import ru.vsu.cs.group7.model.File;
 
-import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,28 +17,20 @@ public class FilesInArchivePage extends FilesPages {
 
     @Override
     public void openPage() throws ApplicationException {
-        System.out.println("Введите id или имя архива");
+        System.out.print("Введите id архива: ");
         String input = getScanner().next();
-        Optional<File> files;
-
         try {
             UUID id = UUID.fromString(input);
-            files = getFileService().getAllFilesInArchiveById(id);
-            print(files);
-        } catch (IllegalArgumentException ex) {
-            files = getFileService().getAllFilesInArchiveByArchiveName(input);
-            print(files);
-        } finally {
+            List<File> files = getFileService().getAllFilesInArchiveById(id);
+            StringBuilder sb = new StringBuilder();
+            sb.append("Уникальный id\tНазвание\tДата добавления\n");
+            files.forEach(file -> {
+                sb.append(file.toString()).append("\n");
+            });
+            System.out.println(sb);
             backToMenu(getParentMenu(), MenusEnum.FileMenu, getIsWait());
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
         }
-    }
-
-    private void print(Optional<File> files) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Уникальный id\tНазвание\tДата добавления");
-        files.ifPresent(file -> {
-            sb.append(file.toString()).append("\n");
-        });
-        System.out.println(sb);
     }
 }

@@ -9,6 +9,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public abstract class BaseMenu {
+//    private final Scanner scanner;
+//    private final MenuManager menuManager;
     private final Controller controller;
     protected String content;
     private Page currentPage;
@@ -17,6 +19,8 @@ public abstract class BaseMenu {
     public BaseMenu(Controller controller, Service service) {
         this.controller = controller;
         this.service = service;
+//        this.scanner = controller.getScanner();
+//        this.menuManager = controller.getMenuManager();
     }
 
     public void printMenu() {
@@ -27,7 +31,7 @@ public abstract class BaseMenu {
                 System.out.println(e.getMessage() + '\n');
                 if (getCurrentPage().getIsWait()) {
                     System.out.println("Для продолжения введите любой символ...");
-                    controller.getScanner().next();
+                    getScanner().next();
                     setCurrentPage(null);
                 }
             }
@@ -41,13 +45,24 @@ public abstract class BaseMenu {
                 System.out.println("Некорректный ввод при выборе пункта. Ожидалось число");
                 controller.setScanner(new Scanner(System.in));
             }
+//            System.out.print("Введите пункт меню: ");
+//            Integer choice = getChoice();
+//            onSelect(choice);
         }
+    }
+
+    public void switchMenu(MenusEnum backTo) {
+        controller.getMenuManager().switchMenu(backTo, controller);
     }
 
     protected abstract void onSelect(Integer choice);
 
     public Integer getChoice() {
-        return controller.getScanner().nextInt();
+        return getScanner().nextInt();
+    }
+
+    private Scanner getScanner() {
+        return controller.getScanner();
     }
 
     public Controller getController() {

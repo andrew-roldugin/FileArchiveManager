@@ -37,8 +37,8 @@ public class FileMenu extends BaseMenu {
             case 2 -> setCurrentPage(new UpdateFilePage(this));
             case 3 -> setCurrentPage(new RemoveFilePage(this));
             case 4 -> setCurrentPage(new AddFilePage(this));
-            case 5 -> getController().getMenuManager().switchMenu(MenusEnum.FileArchiveMenu, getController()); //getCurrentPage().backToMenu(this, MenusEnum.FileArchiveMenu, false);
-            case 6 -> getController().getMenuManager().switchMenu(MenusEnum.UserMenu, getController()); //getCurrentPage().backToMenu(this, MenusEnum.UserMenu, false);
+            case 5 -> switchMenu(MenusEnum.FileArchiveMenu); //getController().getMenuManager().switchMenu(MenusEnum.FileArchiveMenu, getController()); //getCurrentPage().backToMenu(this, MenusEnum.FileArchiveMenu, false);
+            case 6 -> switchMenu(MenusEnum.UserMenu); //getController().getMenuManager().switchMenu(MenusEnum.UserMenu, getController()); //getCurrentPage().backToMenu(this, MenusEnum.UserMenu, false);
         }
     }
 }

@@ -16,10 +16,6 @@ public class MainMenu extends BaseMenu {
             switchMenu(MenusEnum.AuthMenu);
     }
 
-    private BaseMenu switchMenu(MenusEnum menu) {
-        return getController().getMenuManager().switchMenu(menu, getController());
-    }
-
     @Override
     public void onSelect(Integer choice) {
 //        getController().getMenuManager().getCurrentMenu().onSelect(choice);

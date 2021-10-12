@@ -1,22 +1,22 @@
 package ru.vsu.cs.group7.storage.inMemoryStorage;
 
-import ru.vsu.cs.group7.model.Storeable;
+import ru.vsu.cs.group7.model.Entity;
 import ru.vsu.cs.group7.storage.Storage;
 
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public abstract class FakeStorage<T extends Storeable> implements Storage<T> {
-    protected Collection<T> storage;
+public abstract class FakeStorage<T extends Entity> implements Storage<T> {
+    protected List<T> storage;
 
-    public FakeStorage(Collection<T> storage) {
-        this.storage = storage;
+    public FakeStorage(List<T> storage) {
+        this.storage = new LinkedList<>(storage);
     }
 
     @Override
-    public void save(T... items) {
-        storage.addAll(Arrays.asList(items));
+    public void save(T items) {
+        storage.add(items);
     }
 
     @Override
@@ -35,7 +35,7 @@ public abstract class FakeStorage<T extends Storeable> implements Storage<T> {
     public void removeById(UUID id) {
         storage = storage.stream()
                 .filter(item -> !item.getId().equals(id))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 //        T value = getOneById(id)
 //                .orElseThrow(() -> new NotFoundException(String.format("По id %s ничего не найдено", id.toString())));
 //        storage.remove(value);

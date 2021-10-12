@@ -3,8 +3,6 @@ package ru.vsu.cs.group7.application.consoleApp.ui.pages.user;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.UserMenu;
 import ru.vsu.cs.group7.exception.ApplicationException;
-import ru.vsu.cs.group7.exception.UserNotAuthorizedException;
-import ru.vsu.cs.group7.exception.UserNotFoundException;
 import ru.vsu.cs.group7.model.User;
 
 import java.util.UUID;
@@ -39,7 +37,7 @@ public class RemoveUserPage extends UserPages {
 
     @Override
     public void openPage() throws ApplicationException {
-        if (getUserService().getApplicationStorage().getUser().getRole().equals(User.RoleEnum.Admin)) {
+        if (getUserService().getApplicationContext().getUser().getRole().equals(User.RoleEnum.Admin)) {
 
             System.out.print("Введите логин или id пользователя: ");
             String input = getScanner().next();

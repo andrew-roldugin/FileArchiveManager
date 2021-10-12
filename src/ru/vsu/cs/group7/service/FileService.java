@@ -1,7 +1,6 @@
 package ru.vsu.cs.group7.service;
 
-import com.sun.source.tree.UnionTypeTree;
-import ru.vsu.cs.group7.application.consoleApp.config.ApplicationStorage;
+import ru.vsu.cs.group7.application.consoleApp.config.ApplicationContext;
 import ru.vsu.cs.group7.exception.NotAllowedExceptions;
 import ru.vsu.cs.group7.exception.NotFoundException;
 import ru.vsu.cs.group7.exception.UserNotAuthorizedException;
@@ -13,8 +12,8 @@ import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileStorage;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FileArchiveStorage;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FileStorage;
 
-import javax.lang.model.type.UnionType;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -22,71 +21,70 @@ import java.util.stream.Collectors;
 public class FileService implements Service {
     private final FileStorage fileStorage;
     private final FileArchiveStorage fileArchiveStorage;
-    private final ApplicationStorage applicationStorage;
+    private final ApplicationContext context;
 
-    public FileService(FileStorage fileStorage, FileArchiveStorage fileArchiveStorage, ApplicationStorage applicationStorage) {
+    public FileService(FileStorage fileStorage, FileArchiveStorage fileArchiveStorage, ApplicationContext context) {
         this.fileStorage = fileStorage;
         this.fileArchiveStorage = fileArchiveStorage;
-        this.applicationStorage = applicationStorage;
+        this.context = context;
     }
 
-    public FileService(ApplicationStorage applicationStorage) {
-        this(new FakeFileStorage(), new FakeFileArchiveStorage(), applicationStorage);
+    public FileService(ApplicationContext context) {
+        this(new FakeFileStorage(), new FakeFileArchiveStorage(), context);
     }
 
     public void addNewFiles(UUID fileArchiveId, Collection<String> names) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
-        applicationStorage.checkLogin();
+        context.checkLogin();
         Optional<FileArchive> fileArchiveOptional = fileArchiveStorage.getOneById(fileArchiveId);
 
         addNew(names, fileArchiveOptional);
     }
 
-    public void addNewFiles(String fileArchiveName, Collection<String> names) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
-        applicationStorage.checkLogin();
-
-        Optional<FileArchive> fileArchiveOptional = fileArchiveStorage.getOneByName(fileArchiveName);
-
-        addNew(names, fileArchiveOptional);
-    }
+//    public void addNewFiles(String fileArchiveName, Collection<String> names) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
+//        context.checkLogin();
+//
+//        Optional<FileArchive> fileArchiveOptional = fileArchiveStorage.getOneByName(fileArchiveName);
+//
+//        addNew(names, fileArchiveOptional);
+//    }
 
     private void addNew(Collection<String> names, Optional<FileArchive> fileArchiveOptional) throws NotFoundException, NotAllowedExceptions {
         if (fileArchiveOptional.isEmpty())
             throw new NotFoundException("Архив не найден");
         FileArchive fileArchive = fileArchiveOptional.get();
         User owner = fileArchive.getOwner();
-        if (!owner.getId().equals(applicationStorage.getUser().getId()) && !owner.getRole().equals(User.RoleEnum.Admin))
+        if (!owner.getId().equals(context.getUser().getId()) && !owner.getRole().equals(User.RoleEnum.Admin))
             throw new NotAllowedExceptions();
 
         names.stream()
                 .map(name -> new File(name, fileArchive))
-                .collect(Collectors.toSet())
+                .collect(Collectors.toList())
                 .forEach(fileStorage::save);
     }
 
     public Optional<File> getFileById(UUID id) throws UserNotAuthorizedException {
-        applicationStorage.checkLogin();
+        context.checkLogin();
 
         return fileStorage.getOneById(id);
     }
 
-    public Optional<File> getFileByName(String name) throws UserNotAuthorizedException {
-        applicationStorage.checkLogin();
+//    public Optional<File> getFileByName(UUID archiveId, String name) throws UserNotAuthorizedException {
+//        context.checkLogin();
+//
+//        return fileStorage.getFileByName(archiveId, name);
+//    }
 
-        return fileStorage.getFileByName(name);
+    public List<File> getAllFilesInArchiveById(UUID fileArchiveId) throws UserNotAuthorizedException {
+        context.checkLogin();
+
+        return fileStorage.getFilesInFileArchive(fileArchiveId).stream().toList();
     }
 
-    public Optional<File> getAllFilesInArchiveById(UUID fileArchiveId) throws UserNotAuthorizedException {
-        applicationStorage.checkLogin();
-
-        Optional<File> filesInFileArchive = fileStorage.getFilesInFileArchive(fileArchiveId);
-        return filesInFileArchive;
-    }
-
-    public Optional<File> getAllFilesInArchiveByArchiveName(String fileArchiveName) throws UserNotAuthorizedException {
-        applicationStorage.checkLogin();
-
-        return fileStorage.getFilesInFileArchive(fileArchiveName);
-    }
+//    public Optional<File> getAllFilesInArchiveByArchiveName(UUID userId, String fileArchiveName) throws UserNotAuthorizedException {
+//        context.checkLogin();
+//
+//        return fileStorage.getFilesInFileArchive(userId, fileArchiveName);
+//    }
 
 //    private Optional<File> get(Optional<File> filesInFileArchive){
 //        filesInFileArchive.stream().filter()
@@ -105,5 +103,10 @@ public class FileService implements Service {
 //        fileArchiveStorage.getOneById(fileArchiveId).ifPresent(fileArchive -> {
 //            fileArchive.removeFile(f)
 //        });
+    }
+
+    @Override
+    public ApplicationContext getApplicationContext() {
+        return context;
     }
 }

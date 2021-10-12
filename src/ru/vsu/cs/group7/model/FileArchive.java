@@ -2,7 +2,7 @@ package ru.vsu.cs.group7.model;
 
 import java.util.*;
 
-public class FileArchive implements Storeable {
+public class FileArchive implements Entity {
 
     private final UUID id;
     private String name;
