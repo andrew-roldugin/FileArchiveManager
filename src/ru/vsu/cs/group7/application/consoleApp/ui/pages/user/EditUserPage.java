@@ -2,6 +2,7 @@ package ru.vsu.cs.group7.application.consoleApp.ui.pages.user;
 
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.UserMenu;
+import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 import ru.vsu.cs.group7.model.User;
 
@@ -30,21 +31,21 @@ public class EditUserPage extends UserPages {
     }
 
     @Override
-    public void openPage() throws ApplicationException {
+    public void openPage() throws ApplicationException, ActionCancelled {
         UUID userId = null;
         if (getUserService().getApplicationContext().getUser().getRole().equals(User.RoleEnum.Admin)) {
             System.out.print("Введите id пользователя: ");
             try {
-                userId = UUID.fromString(getScanner().next());
+                userId = UUID.fromString(readUserInput());
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 return;
             }
         }
         System.out.print("Введите новый логин: ");
-        String login = getScanner().next();
+        String login = readUserInput();
         System.out.print("Введите новый пароль: ");
-        String password = getScanner().next();
+        String password = readUserInput();
 
         if (userId != null)
             getUserService().update(userId, login, password);

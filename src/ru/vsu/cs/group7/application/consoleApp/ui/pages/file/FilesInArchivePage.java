@@ -2,11 +2,11 @@ package ru.vsu.cs.group7.application.consoleApp.ui.pages.file;
 
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileMenu;
+import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 import ru.vsu.cs.group7.model.File;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public class FilesInArchivePage extends FilesPages {
@@ -16,9 +16,9 @@ public class FilesInArchivePage extends FilesPages {
     }
 
     @Override
-    public void openPage() throws ApplicationException {
+    public void openPage() throws ApplicationException, ActionCancelled {
         System.out.print("Введите id архива: ");
-        String input = getScanner().next();
+        String input = readUserInput();
         try {
             UUID id = UUID.fromString(input);
             List<File> files = getFileService().getAllFilesInArchiveById(id);

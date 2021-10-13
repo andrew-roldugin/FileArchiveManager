@@ -29,7 +29,13 @@ public class MenuManager {
 //        System.out.println("загружено из кеша" + menu);
 //        this.currentMenu = m;
 //        return m;
-        BaseMenu menu = MenuFabric.createMenu(menuName, controller);
+        BaseMenu menu;
+        if (menuName != null)
+            menu = MenuFabric.createMenu(menuName, controller);
+        else {
+            getCurrentMenu().setCurrentPage(null);
+            menu = getCurrentMenu();
+        }
         setCurrentMenu(menu);
 
 //        if (getCurrentMenu() != null)

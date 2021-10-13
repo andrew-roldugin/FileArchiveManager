@@ -90,8 +90,10 @@ public class FileService implements Service {
 //        filesInFileArchive.stream().filter()
 //    }
 
-    public void updateById(UUID fileId, String newName) {
+    public void updateById(UUID fileId, String newName) throws NotFoundException {
         Optional<File> oneById = fileStorage.getOneById(fileId);
+        if (oneById.isEmpty())
+            throw new NotFoundException("Файл с таким id не найден и не может быть обновлен");
         oneById.ifPresent(file -> {
             file.setName(newName);
             fileStorage.updateById(file);

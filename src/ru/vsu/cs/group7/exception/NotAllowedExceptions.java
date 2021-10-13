@@ -11,6 +11,6 @@ public class NotAllowedExceptions extends ApplicationException {
     }
 
     public NotAllowedExceptions() {
-        super("Вам заперщено выполнять это действие");
+        super("Вам запрещено выполнять это действие");
     }
 }

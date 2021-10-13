@@ -2,7 +2,7 @@ package ru.vsu.cs.group7.application.consoleApp.ui.pages.archive;
 
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileArchiveMenu;
-import ru.vsu.cs.group7.application.consoleApp.ui.pages.Page;
+import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 
 import java.util.UUID;
@@ -13,9 +13,9 @@ public class RemoveArchivePage extends ArchivesPages {
     }
 
     @Override
-    public void openPage() throws ApplicationException {
+    public void openPage() throws ApplicationException, ActionCancelled {
         System.out.print("Введите id архива: ");
-        String input = getScanner().next();
+        String input = readUserInput();
         try {
             UUID id = UUID.fromString(input);
             getFileArchiveService().removeById(id);

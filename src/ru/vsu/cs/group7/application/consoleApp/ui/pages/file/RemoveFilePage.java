@@ -2,9 +2,9 @@ package ru.vsu.cs.group7.application.consoleApp.ui.pages.file;
 
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileMenu;
+import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 
-import java.util.InputMismatchException;
 import java.util.UUID;
 
 public class RemoveFilePage extends FilesPages {
@@ -13,10 +13,10 @@ public class RemoveFilePage extends FilesPages {
     }
 
     @Override
-    public void openPage() throws ApplicationException {
+    public void openPage() throws ApplicationException, ActionCancelled {
 
         System.out.print("Введите id файла: ");
-        String input = getScanner().next();
+        String input = readUserInput();
 
         try {
             UUID fileId = UUID.fromString(input);

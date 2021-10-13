@@ -2,6 +2,7 @@ package ru.vsu.cs.group7.application.consoleApp.ui.pages.user;
 
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.UserMenu;
+import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 import ru.vsu.cs.group7.model.User;
 
@@ -36,11 +37,11 @@ public class RemoveUserPage extends UserPages {
     }
 
     @Override
-    public void openPage() throws ApplicationException {
+    public void openPage() throws ApplicationException, ActionCancelled {
         if (getUserService().getApplicationContext().getUser().getRole().equals(User.RoleEnum.Admin)) {
 
             System.out.print("Введите логин или id пользователя: ");
-            String input = getScanner().next();
+            String input = readUserInput();
             try {
                 UUID id = UUID.fromString(input);
                 getUserService().removeUserById(id);

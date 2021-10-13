@@ -3,10 +3,7 @@ package ru.vsu.cs.group7.service;
 import ru.vsu.cs.group7.application.consoleApp.config.ApplicationContext;
 import ru.vsu.cs.group7.exception.*;
 import ru.vsu.cs.group7.model.User;
-import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileArchiveStorage;
-import ru.vsu.cs.group7.storage.inMemoryStorage.FakeUserStorage;
-import ru.vsu.cs.group7.storage.inMemoryStorage.FileArchiveStorage;
-import ru.vsu.cs.group7.storage.inMemoryStorage.UserStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.*;
 import ru.vsu.cs.group7.validator.UserValidator;
 
 import java.util.List;
@@ -17,16 +14,18 @@ public class UserService implements Service {
 
     private final UserStorage userStorage;
     private final FileArchiveStorage fileArchiveStorage;
+    private final FileStorage fileStorage;
     private final ApplicationContext context;
 
-    public UserService(UserStorage userStorage, FileArchiveStorage fileArchiveStorage, ApplicationContext context) {
+    public UserService(UserStorage userStorage, FileArchiveStorage fileArchiveStorage, FileStorage fileStorage, ApplicationContext context) {
         this.userStorage = userStorage;
         this.fileArchiveStorage = fileArchiveStorage;
+        this.fileStorage = fileStorage;
         this.context = context;
     }
 
     public UserService(ApplicationContext context) {
-        this(new FakeUserStorage(), new FakeFileArchiveStorage(), context);
+        this(new FakeUserStorage(), new FakeFileArchiveStorage(), new FakeFileStorage(), context);
     }
 
     public User createUser(String login, String password) throws UserValidationException, UserAlreadyExistsException {
@@ -101,7 +100,10 @@ public class UserService implements Service {
         if (userId.equals(context.getUser().getId()))
             context.setUser(null);
         userStorage.removeById(userId);
-        fileArchiveStorage.removeAllByUserId(userId);
+        fileArchiveStorage.getAllArchivesByUserId(userId).forEach(fileArchive -> {
+            fileStorage.removeAllByArchiveId(fileArchive.getId());
+            fileArchiveStorage.removeById(fileArchive.getId());
+        });
     }
 
     public void login(User user) throws UserNotFoundException, PasswordsDoNotMatchException, UserValidationException {

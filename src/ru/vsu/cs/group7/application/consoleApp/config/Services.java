@@ -60,7 +60,7 @@ public class Services {
         FakeUserStorage userStorage = new FakeUserStorage(usersList);
         FakeFileStorage fileStorage = new FakeFileStorage(files);
 
-        this.userService = new UserService(userStorage, fileArchiveStorage, context);
+        this.userService = new UserService(userStorage, fileArchiveStorage, fileStorage, context);
         this.fileService = new FileService(fileStorage,fileArchiveStorage, context);
         this.fileArchiveService = new FileArchiveService(fileArchiveStorage, fileStorage, context);
     }

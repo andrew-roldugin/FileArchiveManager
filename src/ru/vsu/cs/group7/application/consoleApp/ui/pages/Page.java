@@ -2,8 +2,10 @@ package ru.vsu.cs.group7.application.consoleApp.ui.pages;
 
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.BaseMenu;
+import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public abstract class Page {
@@ -18,11 +20,12 @@ public abstract class Page {
         this.parentMenu = parentMenu;
     }
 
-    public abstract void openPage() throws ApplicationException;
+    public abstract void openPage() throws ApplicationException, ActionCancelled;
 
-    public void show() throws ApplicationException {
+    public void show() throws ApplicationException, ActionCancelled {
         System.out.println(header);
         openPage();
+
 //        try {
 //            openPage();
 //        } catch (ApplicationException e) {
@@ -33,6 +36,14 @@ public abstract class Page {
 //        }
     }
 
+    protected String readUserInput() throws ActionCancelled {
+//        getScanner().nextLine();
+        String next = getScanner().next();
+        if(next.equals(":q"))
+            throw new ActionCancelled();
+
+        return next;
+    }
 
     public BaseMenu getParentMenu() {
         return parentMenu;
