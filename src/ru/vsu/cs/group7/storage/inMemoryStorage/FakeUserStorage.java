@@ -6,8 +6,6 @@ import java.util.*;
 
 public class FakeUserStorage extends FakeStorage<User> implements UserStorage {
 
-//    private final Set<User> users = new HashSet<>();
-
     public FakeUserStorage() {
         super(new LinkedList<>());
     }

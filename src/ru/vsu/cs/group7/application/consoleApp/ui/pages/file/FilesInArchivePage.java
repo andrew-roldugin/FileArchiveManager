@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class FilesInArchivePage extends FilesPages {
+
     public FilesInArchivePage(FileMenu fileMenu) {
         super(fileMenu, "========================== Информация обо всех файлах в архиве ==========================");
         this.isWait = true;

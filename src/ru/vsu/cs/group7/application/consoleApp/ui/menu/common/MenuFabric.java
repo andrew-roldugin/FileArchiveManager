@@ -1,11 +1,11 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.menu.common;
 
 import ru.vsu.cs.group7.application.consoleApp.Controller;
+import ru.vsu.cs.group7.application.consoleApp.config.Services;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.AuthMenu;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileArchiveMenu;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileMenu;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.UserMenu;
-import ru.vsu.cs.group7.application.consoleApp.config.Services;
 
 
 public class MenuFabric {

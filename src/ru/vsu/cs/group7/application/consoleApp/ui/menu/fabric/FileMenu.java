@@ -30,15 +30,16 @@ public class FileMenu extends BaseMenu {
 
     @Override
     public void onSelect(Integer choice) {
-        switch (choice){
+        switch (choice) {
             case 0 -> exit();
 
             case 1 -> setCurrentPage(new FilesInArchivePage(this));
             case 2 -> setCurrentPage(new UpdateFilePage(this));
             case 3 -> setCurrentPage(new RemoveFilePage(this));
             case 4 -> setCurrentPage(new AddFilePage(this));
-            case 5 -> switchMenu(MenusEnum.FileArchiveMenu); //getController().getMenuManager().switchMenu(MenusEnum.FileArchiveMenu, getController()); //getCurrentPage().backToMenu(this, MenusEnum.FileArchiveMenu, false);
-            case 6 -> switchMenu(MenusEnum.UserMenu); //getController().getMenuManager().switchMenu(MenusEnum.UserMenu, getController()); //getCurrentPage().backToMenu(this, MenusEnum.UserMenu, false);
+
+            case 5 -> switchMenu(MenusEnum.FileArchiveMenu);
+            case 6 -> switchMenu(MenusEnum.UserMenu);
         }
     }
 }

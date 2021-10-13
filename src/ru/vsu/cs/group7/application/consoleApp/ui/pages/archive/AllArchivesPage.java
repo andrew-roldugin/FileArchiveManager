@@ -6,19 +6,10 @@ import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 
 public class AllArchivesPage extends ArchivesPages {
+
     public AllArchivesPage(FileArchiveMenu parentMenu) {
         super(parentMenu, "=========================== Информация обо всех архивах ===========================");
         this.isWait = true;
-//        setAction((input) -> {
-//            StringBuilder sb = new StringBuilder();
-//            sb.append("id\tname\tupdateTime\tcreateTime\n");
-//            getFileArchiveService().getAllArchives().forEach(fileArchive -> {
-//                sb.append(fileArchive.toString()).append("\n");
-//            });
-////            sb.append("\n");
-//            System.out.println(sb);
-////            Main.setCurrentPage(MainPage.getINSTANCE());
-//        });
     }
 
     @Override

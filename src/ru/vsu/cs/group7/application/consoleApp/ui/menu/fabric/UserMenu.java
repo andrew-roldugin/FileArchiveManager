@@ -29,18 +29,20 @@ public class UserMenu extends BaseMenu {
                         |				___________________________________________________               |
                         | 0) Завершение работы															  |
                         |_________________________________________________________________________________|
-                        """, login + " ".repeat(66 - login.length())); //+ "\t".repeat((int) StrictMath.round((66 - login.length()) / 4.)) + " ".repeat(2));
+                        """, login + " ".repeat(66 - login.length()));
     }
 
     @Override
     public void onSelect(Integer choice) {
         switch (choice) {
+            case 0 -> exit();
+
             case 1 -> setCurrentPage(new AllUsersPage(this));
             case 2 -> setCurrentPage(new EditUserPage(this));
             case 3 -> setCurrentPage(new RemoveUserPage(this));
             case 4 -> setCurrentPage(new LogoutPage(this));
-            case 5 -> switchMenu(MenusEnum.FileArchiveMenu); //getController().getMenuManager().switchMenu(MenusEnum.FileArchiveMenu, getController());
-            case 0 -> exit();
+
+            case 5 -> switchMenu(MenusEnum.FileArchiveMenu);
         }
     }
 }

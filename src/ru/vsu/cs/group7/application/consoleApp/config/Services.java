@@ -11,7 +11,9 @@ import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileArchiveStorage;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileStorage;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FakeUserStorage;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class Services {
 
@@ -25,8 +27,6 @@ public class Services {
                 new User(UUID.fromString("d150f135-f4b9-4b50-9018-51a1ed5982bf"), "admin", "pass", User.RoleEnum.Admin),
                 new User(UUID.fromString("6bed28b0-902d-49f6-a322-b63b8ec5e6a7"), "Test", "123")
         );
-
-//        Set<User> users = new HashSet<>();
 
         List<FileArchive> fileArchives = Arrays.asList(
                 new FileArchive(UUID.fromString("954e1f1f-c048-47a4-bd26-8b722191c8af"), "test1", usersList.get(0)),
@@ -53,15 +53,13 @@ public class Services {
                 new File("file9", fileArchives.get(5)),
                 new File("file10", fileArchives.get(6))
         );
-//        Set<FileArchive> fa = new HashSet<>(fileArchives);
-
 
         FakeFileArchiveStorage fileArchiveStorage = new FakeFileArchiveStorage(fileArchives);
         FakeUserStorage userStorage = new FakeUserStorage(usersList);
         FakeFileStorage fileStorage = new FakeFileStorage(files);
 
         this.userService = new UserService(userStorage, fileArchiveStorage, fileStorage, context);
-        this.fileService = new FileService(fileStorage,fileArchiveStorage, context);
+        this.fileService = new FileService(fileStorage, fileArchiveStorage, context);
         this.fileArchiveService = new FileArchiveService(fileArchiveStorage, fileStorage, context);
     }
 

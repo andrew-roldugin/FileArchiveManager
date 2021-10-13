@@ -9,7 +9,6 @@ public class FileArchive implements Entity {
     private Date updateTime;
     private final Date createTime;
     private final User owner;
-//    private final Set<File> files;
 
     public FileArchive(UUID id, String name, Date updateTime, Date createTime, User owner) {
         this.id = id;
@@ -17,7 +16,6 @@ public class FileArchive implements Entity {
         this.updateTime = updateTime;
         this.createTime = createTime;
         this.owner = owner;
-//        this.files = new HashSet<>();
     }
 
     public FileArchive(UUID id, String name, User owner) {
@@ -63,27 +61,4 @@ public class FileArchive implements Entity {
         return String.format("%s\t%s\t%s\t%s", id, name, createTime, updateTime);
     }
 
-    //    public Set<File> getFiles() {
-//        return Collections.unmodifiableSet(files);
-//    }
-//
-//    public boolean addFile(File f){
-//        return files.add(f);
-//    }
-//
-//    public boolean removeFile(File f){
-//        return files.remove(f);
-//    }
-//
-//    public int getTotalCountFiles(){
-//        return files.size();
-//    }
-//
-//    public void addAll(Collection<File> files){
-//        this.files.addAll(files);
-//    }
-//
-//    public boolean isEmpty(){
-//        return files.isEmpty();
-//    }
 }

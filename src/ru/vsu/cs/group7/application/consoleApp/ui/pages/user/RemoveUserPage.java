@@ -9,31 +9,9 @@ import ru.vsu.cs.group7.model.User;
 import java.util.UUID;
 
 public class RemoveUserPage extends UserPages {
+
     public RemoveUserPage(UserMenu userMenu) {
         super(userMenu, "=================================== Удаление аккаунта ===================================");
-//        setAction(x -> {
-//            System.out.print("Введите логин или id пользователя: ");
-//            String input = getScanner().next();
-//
-//            try {
-//                UUID id = UUID.fromString(input);
-//                getUserService().removeUserById(id);
-//                System.out.println("Успешно\n");
-//                backToMenu(userMenu, MenusEnum.UserMenu, false);
-//            } catch (IllegalArgumentException ex) {
-//                try {
-//                    getUserService().removeUserByLogin(input);
-//                    System.out.println("Успешно\n");
-//                    backToMenu(userMenu, MenusEnum.UserMenu, false);
-//                } catch (UserNotAuthorizedException | UserNotFoundException e) {
-//                    System.out.println(e.getMessage() + "\n");
-//                    userMenu.printMenu();
-//                }
-//            } catch (UserNotFoundException | UserNotAuthorizedException e) {
-//                System.out.println(e.getMessage() + "\n");
-//                userMenu.printMenu();
-//            }
-//        });
     }
 
     @Override
@@ -53,7 +31,7 @@ public class RemoveUserPage extends UserPages {
                 backToMenu(getParentMenu(), MenusEnum.MainMenu, getIsWait());
             }
         } else {
-            getUserService().removeUser();
+            getUserService().removeCurrentUser();
             System.out.println("Успешно\n");
             backToMenu(getParentMenu(), MenusEnum.MainMenu, getIsWait());
         }

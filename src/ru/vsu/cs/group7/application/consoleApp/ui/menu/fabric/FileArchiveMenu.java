@@ -27,7 +27,6 @@ public class FileArchiveMenu extends BaseMenu {
                 | 0) Завершение работы;                                                           |
                 |_________________________________________________________________________________|
                 """;
-//        setCurrentPage(new FirstPage(this, content));
     }
 
     @Override
@@ -39,8 +38,9 @@ public class FileArchiveMenu extends BaseMenu {
             case 2 -> setCurrentPage(new UpdateArchivePage(this));
             case 3 -> setCurrentPage(new RemoveArchivePage(this));
             case 4 -> setCurrentPage(new CreateArchivePage(this));
-            case 5 -> switchMenu(MenusEnum.FileMenu);// getCurrentPage().backToMenu(this, MenusEnum.FileMenu, false);
-            case 6 -> switchMenu(MenusEnum.UserMenu); //getController().getMenuManager().switchMenu(MenusEnum.UserMenu, getController()); //getCurrentPage().backToMenu(this, MenusEnum.UserMenu, false);
+
+            case 5 -> switchMenu(MenusEnum.FileMenu);
+            case 6 -> switchMenu(MenusEnum.UserMenu);
         }
     }
 }

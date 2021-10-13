@@ -75,7 +75,7 @@ public class User implements Entity {
 
     @Override
     public String toString() {
-        return String.format("%s\t%s", id, login);
+        return String.format("%s\t%s\t%s", id, login, role);
     }
 
     public enum RoleEnum{

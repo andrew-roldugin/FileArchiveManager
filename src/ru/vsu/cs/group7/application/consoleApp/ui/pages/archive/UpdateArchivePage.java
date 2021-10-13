@@ -7,10 +7,10 @@ import ru.vsu.cs.group7.exception.ApplicationException;
 
 import java.util.UUID;
 
-public class UpdateArchivePage extends ArchivesPages{
+public class UpdateArchivePage extends ArchivesPages {
+
     public UpdateArchivePage(FileArchiveMenu fileArchiveMenu) {
         super(fileArchiveMenu, "================================== Обновление архива ====================================");
-
     }
 
     @Override

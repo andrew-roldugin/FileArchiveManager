@@ -28,9 +28,10 @@ public class AuthMenu extends BaseMenu {
     @Override
     protected void onSelect(Integer choice) {
         switch (choice) {
+            case 0 -> exit();
+
             case 1 -> setCurrentPage(new CreateUserPage(this));
             case 2 -> setCurrentPage(new LoginPage(this));
-            case 0 -> exit();
         }
     }
 }

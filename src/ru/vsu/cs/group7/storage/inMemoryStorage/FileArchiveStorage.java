@@ -9,6 +9,5 @@ import java.util.UUID;
 
 public interface FileArchiveStorage extends Storage<FileArchive> {
     void removeAllByUserId(UUID userId);
-//    Optional<FileArchive> getOneByName(String fileArchiveName);
     List<FileArchive> getAllArchivesByUserId(UUID id);
 }

@@ -1,11 +1,11 @@
 package ru.vsu.cs.group7.service;
 
+import ru.vsu.cs.group7.application.consoleApp.config.ApplicationContext;
 import ru.vsu.cs.group7.exception.NotAllowedExceptions;
 import ru.vsu.cs.group7.exception.NotFoundException;
 import ru.vsu.cs.group7.exception.UserNotAuthorizedException;
 import ru.vsu.cs.group7.model.FileArchive;
 import ru.vsu.cs.group7.model.User;
-import ru.vsu.cs.group7.application.consoleApp.config.ApplicationContext;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileArchiveStorage;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileStorage;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FileArchiveStorage;
@@ -59,11 +59,6 @@ public class FileArchiveService implements Service {
         UUID archiveId = fileArchive.getId();
         fileArchiveStorage.removeById(archiveId);
         fileStorage.removeAllByArchiveId(archiveId);
-    }
-
-    public void removeAll(UUID userId) throws UserNotAuthorizedException {
-        context.checkLogin();
-        fileArchiveStorage.removeAllByUserId(userId);
     }
 
     public void update(UUID fileArchiveId, String newName) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {

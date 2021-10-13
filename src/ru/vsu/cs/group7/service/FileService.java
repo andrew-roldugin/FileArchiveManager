@@ -19,6 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class FileService implements Service {
+
     private final FileStorage fileStorage;
     private final FileArchiveStorage fileArchiveStorage;
     private final ApplicationContext context;
@@ -40,15 +41,8 @@ public class FileService implements Service {
         addNew(names, fileArchiveOptional);
     }
 
-//    public void addNewFiles(String fileArchiveName, Collection<String> names) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
-//        context.checkLogin();
-//
-//        Optional<FileArchive> fileArchiveOptional = fileArchiveStorage.getOneByName(fileArchiveName);
-//
-//        addNew(names, fileArchiveOptional);
-//    }
-
     private void addNew(Collection<String> names, Optional<FileArchive> fileArchiveOptional) throws NotFoundException, NotAllowedExceptions {
+
         if (fileArchiveOptional.isEmpty())
             throw new NotFoundException("Архив не найден");
         FileArchive fileArchive = fileArchiveOptional.get();
@@ -68,29 +62,15 @@ public class FileService implements Service {
         return fileStorage.getOneById(id);
     }
 
-//    public Optional<File> getFileByName(UUID archiveId, String name) throws UserNotAuthorizedException {
-//        context.checkLogin();
-//
-//        return fileStorage.getFileByName(archiveId, name);
-//    }
-
     public List<File> getAllFilesInArchiveById(UUID fileArchiveId) throws UserNotAuthorizedException {
         context.checkLogin();
 
-        return fileStorage.getFilesInFileArchive(fileArchiveId).stream().toList();
+        return fileStorage.getAllFilesInFileArchive(fileArchiveId).stream().toList();
     }
 
-//    public Optional<File> getAllFilesInArchiveByArchiveName(UUID userId, String fileArchiveName) throws UserNotAuthorizedException {
-//        context.checkLogin();
-//
-//        return fileStorage.getFilesInFileArchive(userId, fileArchiveName);
-//    }
+    public void updateById(UUID fileId, String newName) throws NotFoundException, UserNotAuthorizedException {
+        context.checkLogin();
 
-//    private Optional<File> get(Optional<File> filesInFileArchive){
-//        filesInFileArchive.stream().filter()
-//    }
-
-    public void updateById(UUID fileId, String newName) throws NotFoundException {
         Optional<File> oneById = fileStorage.getOneById(fileId);
         if (oneById.isEmpty())
             throw new NotFoundException("Файл с таким id не найден и не может быть обновлен");
@@ -102,9 +82,6 @@ public class FileService implements Service {
 
     public void removeFileById(UUID fileId) {
         fileStorage.removeById(fileId);
-//        fileArchiveStorage.getOneById(fileArchiveId).ifPresent(fileArchive -> {
-//            fileArchive.removeFile(f)
-//        });
     }
 
     @Override

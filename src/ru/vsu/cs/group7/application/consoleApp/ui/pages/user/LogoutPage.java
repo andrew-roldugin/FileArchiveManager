@@ -9,13 +9,6 @@ public class LogoutPage extends UserPages {
 
     public LogoutPage(UserMenu userMenu) {
         super(userMenu, "");
-//        setAction(input -> {
-//            System.out.println("Выполняется выход...");
-//            getUserService().logout();
-//            System.out.println("Успешно\n");
-//            backToMenu(userMenu, MenusEnum.AuthMenu, false);
-////            userMenu.getController().getMenuManager().switchMenu(MenusEnum.AuthMenu, userMenu.getController());
-//        });
     }
 
     @Override

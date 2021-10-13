@@ -17,7 +17,5 @@ public class MainMenu extends BaseMenu {
     }
 
     @Override
-    public void onSelect(Integer choice) {
-//        getController().getMenuManager().getCurrentMenu().onSelect(choice);
-    }
+    public void onSelect(Integer choice) { }
 }

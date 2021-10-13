@@ -8,6 +8,7 @@ import ru.vsu.cs.group7.exception.ApplicationException;
 import java.util.UUID;
 
 public class RemoveFilePage extends FilesPages {
+
     public RemoveFilePage(FileMenu fileMenu) {
         super(fileMenu, "==================================== Удаление файла =====================================");
     }
@@ -25,20 +26,5 @@ public class RemoveFilePage extends FilesPages {
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
-
-//        System.out.println("Введите id или имя файла");
-//        String input = getScanner().next();
-//        final UUID[] fileId = {null};
-//        try {
-//            fileId[0] = UUID.fromString(input);
-//        } catch (InputMismatchException ex) {
-//            getFileService().getFileByName(getParentMenu().getController().getContext().getCurrentArchive().getId(), input).ifPresent(file -> {
-//                fileId[0] = file.getId();
-//            });
-//        } finally {
-//            if (fileId[0] != null)
-//                getFileService().removeFileById(fileId[0]);
-//            backToMenu(getParentMenu(), MenusEnum.FileMenu, getIsWait());
-//        }
     }
 }

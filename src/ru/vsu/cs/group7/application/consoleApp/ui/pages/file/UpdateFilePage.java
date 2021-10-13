@@ -8,6 +8,7 @@ import ru.vsu.cs.group7.exception.ApplicationException;
 import java.util.UUID;
 
 public class UpdateFilePage extends FilesPages {
+
     public UpdateFilePage(FileMenu fileMenu) {
         super(fileMenu, "=================================== Обновление файла ====================================");
     }

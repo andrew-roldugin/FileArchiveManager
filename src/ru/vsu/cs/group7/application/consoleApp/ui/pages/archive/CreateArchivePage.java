@@ -6,13 +6,14 @@ import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 
 public class CreateArchivePage extends ArchivesPages {
+
     public CreateArchivePage(FileArchiveMenu fileArchiveMenu) {
         super(fileArchiveMenu, "==================================== Создание архива ====================================");
     }
 
     @Override
     public void openPage() throws ApplicationException, ActionCancelled {
-        System.out.print("Введите имя архива архива: ");
+        System.out.print("Введите имя архива: ");
         String input = readUserInput();
         getFileArchiveService().createArchive(input);
         backToMenu(getParentMenu(), MenusEnum.FileArchiveMenu, getIsWait());

@@ -54,11 +54,15 @@ public class UserService implements Service {
         return userStorage.getOneById(id).orElseThrow(() -> new UserNotFoundException("с id", id.toString()));
     }
 
-    public User update(String newLogin, String newPassword) throws UserValidationException, UserNotAuthorizedException, LoginAlreadyInUseException, NotAllowedExceptions {
-        return update(context.getUser().getId(), newLogin, newPassword);
+    public void updateCurrentUser(String newLogin, String newPassword) throws UserValidationException, UserNotAuthorizedException, LoginAlreadyInUseException, NotAllowedExceptions {
+        update(context.getUser().getId(), newLogin, newPassword);
     }
 
-    public User update(UUID id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions {
+    public User updateById(UUID id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions {
+        return update(id, newLogin, newPassword);
+    }
+
+    private User update(UUID id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions {
         context.checkLogin();
 
         User newUser = new User(id, newLogin, newPassword);
@@ -77,23 +81,19 @@ public class UserService implements Service {
     }
 
     public void removeUserByLogin(String login) throws UserNotAuthorizedException, UserNotFoundException, NotAllowedExceptions {
-        UUID userId = getOneUserByLogin(login).getId();
-        remove(userId);
+        remove(getOneUserByLogin(login).getId());
     }
 
     public void removeUserById(UUID id) throws UserNotAuthorizedException, UserNotFoundException, NotAllowedExceptions {
-        UUID userId = getOneUserById(id).getId();
-        remove(userId);
+        remove(getOneUserById(id).getId());
     }
 
-    public void removeUser() throws UserNotAuthorizedException, NotAllowedExceptions {
-        UUID userId = context.getUser().getId();
-        remove(userId);
+    public void removeCurrentUser() throws UserNotAuthorizedException, NotAllowedExceptions {
+        remove(context.getUser().getId());
     }
 
     private void remove(UUID userId) throws UserNotAuthorizedException, NotAllowedExceptions {
         context.checkLogin();
-//        UUID userId = getOneUserById(id).getId();
         if (!context.getUser().getId().equals(userId) && !context.getUser().getRole().equals(User.RoleEnum.Admin))
             throw new NotAllowedExceptions();
 
