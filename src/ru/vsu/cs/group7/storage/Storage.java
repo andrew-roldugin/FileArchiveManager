@@ -7,9 +7,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface Storage<T extends Entity> {
-    void save(T items);
-    Optional<T> getOneById(UUID id);
+    void save(T item);
+    Optional<T> getOneById(Long id);
     Collection<T> getAll();
     void updateById(T newData);
-    void removeById(UUID id);
+    void removeById(Long id);
 }

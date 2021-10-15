@@ -1,44 +1,39 @@
 package ru.vsu.cs.group7.model;
 
-import java.util.*;
+import java.time.LocalDate;
 
-public class FileArchive implements Entity {
+public class FileArchive extends Entity {
 
-    private final UUID id;
     private String name;
-    private Date updateTime;
-    private final Date createTime;
+    private LocalDate updateTime;
+    private final LocalDate createTime;
     private final User owner;
 
-    public FileArchive(UUID id, String name, Date updateTime, Date createTime, User owner) {
-        this.id = id;
+    public FileArchive(Long id, String name, LocalDate updateTime, LocalDate createTime, User owner) {
+        super(id);
         this.name = name;
         this.updateTime = updateTime;
         this.createTime = createTime;
         this.owner = owner;
     }
 
-    public FileArchive(UUID id, String name, User owner) {
-        this(id, name, new Date(), new Date(), owner);
+    public FileArchive(Long id, String name, User owner) {
+        this(id, name, LocalDate.now(), LocalDate.now(), owner);
     }
 
     public FileArchive(String name, User owner) {
-        this(UUID.randomUUID(), name, new Date(), new Date(), owner);
-    }
-
-    public UUID getId() {
-        return id;
+        this(null, name, LocalDate.now(), LocalDate.now(), owner);
     }
 
     public String getName() {
         return name;
     }
 
-    public Date getUpdateTime() {
+    public LocalDate getUpdateTime() {
         return updateTime;
     }
 
-    public Date getCreateTime() {
+    public LocalDate getCreateTime() {
         return createTime;
     }
 
@@ -51,14 +46,14 @@ public class FileArchive implements Entity {
             this.name = name;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDate updateTime) {
         if (updateTime != null)
             this.updateTime = updateTime;
     }
 
     @Override
     public String toString() {
-        return String.format("%s\t%s\t%s\t%s", id, name, createTime, updateTime);
+        return String.format("%s\t%s\t%s\t%s", getId(), name, createTime, updateTime);
     }
 
 }

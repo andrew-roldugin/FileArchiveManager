@@ -16,12 +16,12 @@ public class EditUserPage extends UserPages {
 
     @Override
     public void openPage() throws ApplicationException, ActionCancelled {
-        UUID userId = null;
+        Long userId = null;
         if (getUserService().getApplicationContext().getUser().getRole().equals(User.RoleEnum.Admin)) {
             System.out.print("Введите id пользователя: ");
             try {
-                userId = UUID.fromString(readUserInput());
-            } catch (IllegalArgumentException e) {
+                userId = Long.parseLong(readUserInput());
+            } catch (NumberFormatException e) {
                 System.out.println(e.getMessage());
                 return;
             }

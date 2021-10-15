@@ -44,7 +44,7 @@ public class FileArchiveService implements Service {
         fileArchiveStorage.save(fileArchive);
     }
 
-    public void removeById(UUID fileArchiveId) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
+    public void removeById(Long fileArchiveId) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
         context.checkLogin();
         Optional<FileArchive> fileArchiveOptional = fileArchiveStorage.getOneById(fileArchiveId);
 
@@ -52,16 +52,16 @@ public class FileArchiveService implements Service {
             throw new NotFoundException("Архив не найден");
         }
         FileArchive fileArchive = fileArchiveOptional.get();
-        UUID userId = context.getUser().getId();
+        Long userId = context.getUser().getId();
         if (!userId.equals(fileArchive.getOwner().getId()))
             throw new NotAllowedExceptions(userId, fileArchiveId, "удалять архив");
 
-        UUID archiveId = fileArchive.getId();
+        Long archiveId = fileArchive.getId();
         fileArchiveStorage.removeById(archiveId);
         fileStorage.removeAllByArchiveId(archiveId);
     }
 
-    public void update(UUID fileArchiveId, String newName) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
+    public void update(Long fileArchiveId, String newName) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
         context.checkLogin();
 
         Optional<FileArchive> fileArchiveOptional = fileArchiveStorage.getOneById(fileArchiveId);
@@ -69,7 +69,7 @@ public class FileArchiveService implements Service {
             throw new NotFoundException("Архив не найден");
         }
         FileArchive fileArchive = fileArchiveOptional.get();
-        UUID userId = context.getUser().getId();
+        Long userId = context.getUser().getId();
         if (!userId.equals(fileArchive.getOwner().getId()))
             throw new NotAllowedExceptions();
 

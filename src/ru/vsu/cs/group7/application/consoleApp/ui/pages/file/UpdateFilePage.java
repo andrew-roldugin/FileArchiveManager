@@ -21,10 +21,10 @@ public class UpdateFilePage extends FilesPages {
         String newName = readUserInput();
 
         try {
-            UUID fileId = UUID.fromString(input);
+            Long fileId = Long.parseLong(input);
             getFileService().updateById(fileId, newName);
             backToMenu(getParentMenu(), MenusEnum.FileMenu, getIsWait());
-        } catch (IllegalArgumentException ex) {
+        } catch (NumberFormatException ex) {
             System.out.println(ex.getMessage());
         }
     }

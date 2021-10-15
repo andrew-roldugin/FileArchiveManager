@@ -21,11 +21,11 @@ public class RemoveUserPage extends UserPages {
             System.out.print("Введите логин или id пользователя: ");
             String input = readUserInput();
             try {
-                UUID id = UUID.fromString(input);
+                Long id = Long.parseLong(input);
                 getUserService().removeUserById(id);
                 System.out.println("Успешно\n");
                 backToMenu(getParentMenu(), MenusEnum.MainMenu, getIsWait());
-            } catch (IllegalArgumentException ex) {
+            } catch (NumberFormatException ex) {
                 getUserService().removeUserByLogin(input);
                 System.out.println("Успешно\n");
                 backToMenu(getParentMenu(), MenusEnum.MainMenu, getIsWait());

@@ -17,10 +17,10 @@ public class RemoveArchivePage extends ArchivesPages {
         System.out.print("Введите id архива: ");
         String input = readUserInput();
         try {
-            UUID id = UUID.fromString(input);
+            Long id = Long.parseLong(input);
             getFileArchiveService().removeById(id);
             backToMenu(getParentMenu(), MenusEnum.FileArchiveMenu, getIsWait());
-        }catch (IllegalArgumentException ex){
+        }catch (NumberFormatException ex){
             System.out.println(ex.getMessage());
         }
     }

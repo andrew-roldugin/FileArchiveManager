@@ -17,14 +17,14 @@ public class FakeFileStorage extends FakeStorage<File> implements FileStorage {
         super(new LinkedList<>());
     }
 
-    public List<File> getAllFilesInFileArchive(UUID fileArchiveId) {
+    public List<File> getAllFilesInFileArchive(Long fileArchiveId) {
         return storage.stream()
                 .filter(f -> f.getFileArchive().getId().equals(fileArchiveId))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void removeAllByArchiveId(UUID archiveId) {
+    public void removeAllByArchiveId(Long archiveId) {
         storage = storage.stream()
                 .filter(file -> !file.getFileArchive().getId().equals(archiveId))
                 .collect(Collectors.toList());

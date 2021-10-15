@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface FileArchiveStorage extends Storage<FileArchive> {
-    void removeAllByUserId(UUID userId);
-    List<FileArchive> getAllArchivesByUserId(UUID id);
+    void removeAllByUserId(Long userId);
+    List<FileArchive> getAllArchivesByUserId(Long id);
 }

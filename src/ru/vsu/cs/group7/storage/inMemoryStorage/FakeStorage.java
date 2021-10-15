@@ -3,6 +3,7 @@ package ru.vsu.cs.group7.storage.inMemoryStorage;
 import ru.vsu.cs.group7.model.Entity;
 import ru.vsu.cs.group7.storage.Storage;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -16,12 +17,13 @@ public abstract class FakeStorage<T extends Entity> implements Storage<T> {
     }
 
     @Override
-    public void save(T items) {
-        storage.add(items);
+    public void save(T item) {
+        item.setId(UniqueLongIdGenerator.generate());
+        storage.add(item);
     }
 
     @Override
-    public Optional<T> getOneById(UUID id) {
+    public Optional<T> getOneById(Long id) {
         return storage.stream()
                 .filter(item -> item.getId().equals(id))
                 .findFirst();
@@ -33,14 +35,14 @@ public abstract class FakeStorage<T extends Entity> implements Storage<T> {
     }
 
     @Override
-    public void removeById(UUID id) {
+    public void removeById(Long id) {
         storage = storage.stream()
                 .filter(item -> !item.getId().equals(id))
                 .collect(Collectors.toList());
     }
 
     protected void updateById(T newData, Consumer<T> action) {
-        UUID id = newData.getId();
+        Long id = newData.getId();
         getOneById(id).ifPresent(action);
     }
 }

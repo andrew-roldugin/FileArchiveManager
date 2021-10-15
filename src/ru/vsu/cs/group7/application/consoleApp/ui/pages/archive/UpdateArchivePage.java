@@ -21,10 +21,10 @@ public class UpdateArchivePage extends ArchivesPages {
         String newName = readUserInput();
 
         try {
-            UUID id = UUID.fromString(input);
+            Long id = Long.parseLong(input);
             getFileArchiveService().update(id, newName);
             backToMenu(getParentMenu(), MenusEnum.FileArchiveMenu, getIsWait());
-        } catch (IllegalArgumentException ex) {
+        } catch (NumberFormatException ex) {
             System.out.println(ex.getMessage());
         }
     }

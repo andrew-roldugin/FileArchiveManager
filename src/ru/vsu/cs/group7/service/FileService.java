@@ -34,7 +34,7 @@ public class FileService implements Service {
         this(new FakeFileStorage(), new FakeFileArchiveStorage(), context);
     }
 
-    public void addNewFiles(UUID fileArchiveId, Collection<String> names) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
+    public void addNewFiles(Long fileArchiveId, Collection<String> names) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
         context.checkLogin();
         Optional<FileArchive> fileArchiveOptional = fileArchiveStorage.getOneById(fileArchiveId);
 
@@ -56,19 +56,19 @@ public class FileService implements Service {
                 .forEach(fileStorage::save);
     }
 
-    public Optional<File> getFileById(UUID id) throws UserNotAuthorizedException {
+    public Optional<File> getFileById(Long id) throws UserNotAuthorizedException {
         context.checkLogin();
 
         return fileStorage.getOneById(id);
     }
 
-    public List<File> getAllFilesInArchiveById(UUID fileArchiveId) throws UserNotAuthorizedException {
+    public List<File> getAllFilesInArchiveById(Long fileArchiveId) throws UserNotAuthorizedException {
         context.checkLogin();
 
         return fileStorage.getAllFilesInFileArchive(fileArchiveId).stream().toList();
     }
 
-    public void updateById(UUID fileId, String newName) throws NotFoundException, UserNotAuthorizedException {
+    public void updateById(Long fileId, String newName) throws NotFoundException, UserNotAuthorizedException {
         context.checkLogin();
 
         Optional<File> oneById = fileStorage.getOneById(fileId);
@@ -80,7 +80,7 @@ public class FileService implements Service {
         });
     }
 
-    public void removeFileById(UUID fileId) {
+    public void removeFileById(Long fileId) {
         fileStorage.removeById(fileId);
     }
 

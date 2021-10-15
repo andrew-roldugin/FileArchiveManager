@@ -21,7 +21,7 @@ public class FilesInArchivePage extends FilesPages {
         System.out.print("Введите id архива: ");
         String input = readUserInput();
         try {
-            UUID id = UUID.fromString(input);
+            Long id = Long.parseLong(input);
             List<File> files = getFileService().getAllFilesInArchiveById(id);
             StringBuilder sb = new StringBuilder();
             sb.append("Уникальный id\tНазвание\tДата добавления\n");
@@ -30,7 +30,7 @@ public class FilesInArchivePage extends FilesPages {
             });
             System.out.println(sb);
             backToMenu(getParentMenu(), MenusEnum.FileMenu, getIsWait());
-        } catch (IllegalArgumentException ex) {
+        } catch (NumberFormatException ex) {
             System.out.println(ex.getMessage());
         }
     }

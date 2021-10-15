@@ -26,9 +26,9 @@ public class AddFilePage extends FilesPages {
             throw new ActionCancelled();
         List<String> names = Arrays.stream(listOfFiles.split(" ")).toList();
         try {
-            getFileService().addNewFiles(UUID.fromString(input), names);
+            getFileService().addNewFiles(Long.parseLong(input), names);
             backToMenu(getParentMenu(), MenusEnum.FileMenu, getIsWait());
-        } catch (IllegalArgumentException ex) {
+        } catch (NumberFormatException ex) {
             System.out.println(ex.getMessage());
         }
     }

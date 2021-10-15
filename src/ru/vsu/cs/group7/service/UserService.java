@@ -8,7 +8,6 @@ import ru.vsu.cs.group7.validator.UserValidator;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class UserService implements Service {
 
@@ -50,19 +49,20 @@ public class UserService implements Service {
         return userStorage.getOneByLogin(login).orElseThrow(() -> new UserNotFoundException("с логином", login));
     }
 
-    public User getOneUserById(UUID id) throws UserNotFoundException {
+    public User getOneUserById(Long id) throws UserNotFoundException {
         return userStorage.getOneById(id).orElseThrow(() -> new UserNotFoundException("с id", id.toString()));
     }
 
     public void updateCurrentUser(String newLogin, String newPassword) throws UserValidationException, UserNotAuthorizedException, LoginAlreadyInUseException, NotAllowedExceptions {
-        update(context.getUser().getId(), newLogin, newPassword);
+        User newUser = update(context.getUser().getId(), newLogin, newPassword);
+        context.setUser(newUser);
     }
 
-    public User updateById(UUID id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions {
+    public User updateById(Long id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions {
         return update(id, newLogin, newPassword);
     }
 
-    private User update(UUID id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions {
+    private User update(Long id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions {
         context.checkLogin();
 
         User newUser = new User(id, newLogin, newPassword);
@@ -72,11 +72,10 @@ public class UserService implements Service {
         if (oneByLogin.isPresent())
             throw new LoginAlreadyInUseException(newLogin);
 
-        if (!context.getUser().getId().equals(id) && !context.getUser().getRole().equals(User.RoleEnum.Admin))
+        if (!(context.getUser().getId().equals(id) || context.getUser().getRole().equals(User.RoleEnum.Admin)))
             throw new NotAllowedExceptions();
 
         userStorage.updateById(newUser);
-        context.setUser(newUser);
         return newUser;
     }
 
@@ -84,7 +83,7 @@ public class UserService implements Service {
         remove(getOneUserByLogin(login).getId());
     }
 
-    public void removeUserById(UUID id) throws UserNotAuthorizedException, UserNotFoundException, NotAllowedExceptions {
+    public void removeUserById(Long id) throws UserNotAuthorizedException, UserNotFoundException, NotAllowedExceptions {
         remove(getOneUserById(id).getId());
     }
 
@@ -92,7 +91,7 @@ public class UserService implements Service {
         remove(context.getUser().getId());
     }
 
-    private void remove(UUID userId) throws UserNotAuthorizedException, NotAllowedExceptions {
+    private void remove(Long userId) throws UserNotAuthorizedException, NotAllowedExceptions {
         context.checkLogin();
         if (!context.getUser().getId().equals(userId) && !context.getUser().getRole().equals(User.RoleEnum.Admin))
             throw new NotAllowedExceptions();

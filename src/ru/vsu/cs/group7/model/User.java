@@ -2,33 +2,29 @@ package ru.vsu.cs.group7.model;
 
 import java.util.UUID;
 
-public class User implements Entity {
-    private final UUID id;
+public class User extends Entity {
+
     private String login;
     private String password;
     private RoleEnum role;
 
-    public User(UUID id, String login, String password, RoleEnum role) {
-        this.id = id;
+    public User(Long id, String login, String password, RoleEnum role) {
+        super(id);
         this.login = login;
         this.password = password;
         this.role = role;
     }
 
     public User(String login, String password, RoleEnum role) {
-        this(UUID.randomUUID(), login, password, role);
+        this(null, login, password, role);
     }
 
-    public User(UUID id, String login, String password) {
+    public User(Long id, String login, String password) {
         this(id, login, password, RoleEnum.User);
     }
 
     public User(String login, String password) {
-        this(UUID.randomUUID(), login, password, RoleEnum.User);
-    }
-
-    public UUID getId() {
-        return id;
+        this(null, login, password, RoleEnum.User);
     }
 
     public String getLogin() {
@@ -75,10 +71,10 @@ public class User implements Entity {
 
     @Override
     public String toString() {
-        return String.format("%s\t%s\t%s", id, login, role);
+        return String.format("%s\t%s\t%s", getId(), login, role);
     }
 
-    public enum RoleEnum{
+    public enum RoleEnum {
         User,
         Admin
     }
