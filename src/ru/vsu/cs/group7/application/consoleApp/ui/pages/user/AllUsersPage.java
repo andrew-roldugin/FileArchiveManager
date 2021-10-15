@@ -17,13 +17,7 @@ public class AllUsersPage extends UserPages {
 
     @Override
     public void openPage() throws ApplicationException, ActionCancelled {
-        StringBuilder sb = new StringBuilder();
-        Collection<User> users = getUserService().findAll(User.RoleEnum.Admin);
-        sb.append("id\tлогин\tроль").append("\n");
-        users.forEach(user -> {
-            sb.append(user.toString()).append("\n");
-        });
-        System.out.println(sb);
+        renderTable(new String[]{"ID", "Логин", "Роль"}, getUserService().findAll(User.RoleEnum.Admin));
         backToMenu(getParentMenu(), MenusEnum.UserMenu, getIsWait());
     }
 }

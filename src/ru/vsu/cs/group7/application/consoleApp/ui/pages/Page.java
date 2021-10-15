@@ -1,10 +1,15 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.pages;
 
+import de.vandermeer.asciitable.AsciiTable;
+import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.BaseMenu;
 import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
+import ru.vsu.cs.group7.model.Entity;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -63,5 +68,18 @@ public abstract class Page {
 
     public boolean getIsWait() {
         return isWait;
+    }
+
+    protected <T extends Entity> void renderTable(String[] header, Collection<T> collection){
+        AsciiTable at = new AsciiTable();
+        at.addRule();
+        at.addRow(header);
+        at.setTextAlignment(TextAlignment.CENTER);
+        at.addRule();
+        collection.forEach(item -> {
+            at.addRow(item.toString().split("\t"));
+            at.addRule();
+        });
+        System.out.println(at.render());
     }
 }

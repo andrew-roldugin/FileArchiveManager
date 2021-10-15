@@ -1,15 +1,18 @@
 package ru.vsu.cs.group7.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
 import java.util.UUID;
 
 public class File extends Entity {
 
     private String name;
-    private final Date appendTime;
+    private final LocalDate appendTime;
     private final FileArchive fileArchive;
 
-    public File(Long id, FileArchive fileArchive, String name, Date appendTime) {
+    public File(Long id, FileArchive fileArchive, String name, LocalDate appendTime) {
         super(id);
         this.name = name;
         this.appendTime = appendTime;
@@ -17,7 +20,7 @@ public class File extends Entity {
     }
 
     public File(String name, FileArchive fileArchive) {
-        this(null, fileArchive, name, new Date());
+        this(null, fileArchive, name, LocalDate.now());
     }
 
     public String getName() {
@@ -29,7 +32,7 @@ public class File extends Entity {
             this.name = name;
     }
 
-    public Date getAppendTime() {
+    public LocalDate getAppendTime() {
         return appendTime;
     }
 
@@ -42,7 +45,7 @@ public class File extends Entity {
         final StringBuilder sb = new StringBuilder();
         sb.append(getId()).append("\t");
         sb.append(name).append('\t');
-        sb.append(appendTime).append('\t');
+        sb.append(appendTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))).append('\t');
         return sb.toString();
     }
 }

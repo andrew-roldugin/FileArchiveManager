@@ -23,12 +23,7 @@ public class FilesInArchivePage extends FilesPages {
         try {
             Long id = Long.parseLong(input);
             List<File> files = getFileService().getAllFilesInArchiveById(id);
-            StringBuilder sb = new StringBuilder();
-            sb.append("Уникальный id\tНазвание\tДата добавления\n");
-            files.forEach(file -> {
-                sb.append(file.toString()).append("\n");
-            });
-            System.out.println(sb);
+            renderTable(new String[]{"ID", "Название", "Дата добавления"}, files);
             backToMenu(getParentMenu(), MenusEnum.FileMenu, getIsWait());
         } catch (NumberFormatException ex) {
             System.out.println(ex.getMessage());

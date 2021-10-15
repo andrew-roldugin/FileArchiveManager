@@ -1,6 +1,8 @@
 package ru.vsu.cs.group7.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class FileArchive extends Entity {
 
@@ -53,7 +55,10 @@ public class FileArchive extends Entity {
 
     @Override
     public String toString() {
-        return String.format("%s\t%s\t%s\t%s", getId(), name, createTime, updateTime);
+        return String.format("%s\t%s\t%s\t%s", getId(), name,
+                createTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy")),
+                updateTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+        );
     }
 
 }
