@@ -5,8 +5,6 @@ import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileArchiveMenu;
 import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 
-import java.util.UUID;
-
 public class RemoveArchivePage extends ArchivesPages {
     public RemoveArchivePage(FileArchiveMenu fileArchiveMenu) {
         super(fileArchiveMenu, "==================================== Удаление архива ====================================");

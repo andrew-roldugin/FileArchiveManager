@@ -2,9 +2,6 @@ package ru.vsu.cs.group7.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.Date;
-import java.util.UUID;
 
 public class File extends Entity {
 
@@ -28,7 +25,7 @@ public class File extends Entity {
     }
 
     public void setName(String name) {
-        if (name != null && !name.isBlank())
+        if (!(name == null || !name.isBlank()))
             this.name = name;
     }
 

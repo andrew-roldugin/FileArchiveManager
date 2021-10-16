@@ -5,8 +5,6 @@ import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileMenu;
 import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 
-import java.util.UUID;
-
 public class RemoveFilePage extends FilesPages {
 
     public RemoveFilePage(FileMenu fileMenu) {
@@ -14,7 +12,7 @@ public class RemoveFilePage extends FilesPages {
     }
 
     @Override
-    public void openPage() throws ApplicationException, ActionCancelled {
+    public void openPage() throws ActionCancelled {
 
         System.out.print("Введите id файла: ");
         String input = readUserInput();

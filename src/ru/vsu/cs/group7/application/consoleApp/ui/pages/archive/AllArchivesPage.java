@@ -1,7 +1,5 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.pages.archive;
 
-import de.vandermeer.asciitable.AsciiTable;
-import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileArchiveMenu;
 import ru.vsu.cs.group7.exception.ActionCancelled;
@@ -15,7 +13,7 @@ public class AllArchivesPage extends ArchivesPages {
     }
 
     @Override
-    public void openPage() throws ApplicationException, ActionCancelled {
+    public void openPage() throws ActionCancelled {
         renderTable(new String[]{"ID", "Название", "Дата создания", "Дата обновления"}, getFileArchiveService().getAllArchives());
         backToMenu(getParentMenu(), MenusEnum.FileArchiveMenu, getIsWait());
     }

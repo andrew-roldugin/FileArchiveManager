@@ -4,7 +4,6 @@ import ru.vsu.cs.group7.model.File;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class FakeFileStorage extends FakeStorage<File> implements FileStorage {

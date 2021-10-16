@@ -6,8 +6,6 @@ import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 import ru.vsu.cs.group7.model.User;
 
-import java.util.UUID;
-
 public class RemoveUserPage extends UserPages {
 
     public RemoveUserPage(UserMenu userMenu) {

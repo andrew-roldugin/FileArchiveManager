@@ -6,8 +6,6 @@ import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 import ru.vsu.cs.group7.model.User;
 
-import java.util.Collection;
-
 public class AllUsersPage extends UserPages {
 
     public AllUsersPage(UserMenu userMenu) {

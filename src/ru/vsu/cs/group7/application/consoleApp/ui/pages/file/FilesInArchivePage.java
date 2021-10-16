@@ -7,7 +7,6 @@ import ru.vsu.cs.group7.exception.ApplicationException;
 import ru.vsu.cs.group7.model.File;
 
 import java.util.List;
-import java.util.UUID;
 
 public class FilesInArchivePage extends FilesPages {
 

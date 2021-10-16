@@ -1,7 +1,5 @@
 package ru.vsu.cs.group7.model;
 
-import java.util.UUID;
-
 public abstract class Entity {
 
     private Long id;

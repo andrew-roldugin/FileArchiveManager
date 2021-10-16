@@ -7,7 +7,6 @@ import ru.vsu.cs.group7.exception.ApplicationException;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 public class AddFilePage extends FilesPages {
 

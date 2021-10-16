@@ -5,8 +5,6 @@ import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileMenu;
 import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 
-import java.util.UUID;
-
 public class UpdateFilePage extends FilesPages {
 
     public UpdateFilePage(FileMenu fileMenu) {

@@ -1,7 +1,5 @@
 package ru.vsu.cs.group7.model;
 
-import java.util.UUID;
-
 public class User extends Entity {
 
     private String login;
@@ -50,24 +48,7 @@ public class User extends Entity {
     public void setRole(RoleEnum role) {
         this.role = role;
     }
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        User user = (User) o;
-//
-//        if (!id.equals(user.id)) return false;
-//        return login.equals(user.login);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = id.hashCode();
-//        result = 31 * result + login.hashCode();
-//        return result;
-//    }
+
 
     @Override
     public String toString() {

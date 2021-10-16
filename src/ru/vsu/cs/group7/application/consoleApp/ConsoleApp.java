@@ -2,7 +2,6 @@ package ru.vsu.cs.group7.application.consoleApp;
 
 import ru.vsu.cs.group7.application.Application;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.BaseMenu;
-import ru.vsu.cs.group7.service.Service;
 
 public class ConsoleApp implements Application {
     private final Controller controller = new Controller();

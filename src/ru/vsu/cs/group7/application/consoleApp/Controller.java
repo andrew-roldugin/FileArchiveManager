@@ -5,7 +5,6 @@ import ru.vsu.cs.group7.application.consoleApp.config.Services;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenuManager;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.model.User;
-import ru.vsu.cs.group7.service.Service;
 
 import java.util.Scanner;
 

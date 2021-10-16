@@ -2,7 +2,6 @@ package ru.vsu.cs.group7.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
 public class FileArchive extends Entity {
 
@@ -44,7 +43,7 @@ public class FileArchive extends Entity {
     }
 
     public void setName(String name) {
-        if (name != null && !name.isBlank())
+        if (!(name == null || name.isBlank()))
             this.name = name;
     }
 

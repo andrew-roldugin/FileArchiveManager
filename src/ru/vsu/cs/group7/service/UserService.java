@@ -93,7 +93,7 @@ public class UserService implements Service {
 
     private void remove(Long userId) throws UserNotAuthorizedException, NotAllowedExceptions {
         context.checkLogin();
-        if (!context.getUser().getId().equals(userId) && !context.getUser().getRole().equals(User.RoleEnum.Admin))
+        if (!(context.getUser().getId().equals(userId) || context.getUser().getRole().equals(User.RoleEnum.Admin)))
             throw new NotAllowedExceptions();
 
         if (userId.equals(context.getUser().getId()))

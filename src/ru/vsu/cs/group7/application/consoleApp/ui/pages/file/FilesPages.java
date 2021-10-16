@@ -1,7 +1,6 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.pages.file;
 
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.BaseMenu;
-import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileMenu;
 import ru.vsu.cs.group7.application.consoleApp.ui.pages.Page;
 import ru.vsu.cs.group7.service.FileService;
 

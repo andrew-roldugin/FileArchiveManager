@@ -12,7 +12,7 @@ public class LogoutPage extends UserPages {
     }
 
     @Override
-    public void openPage() throws ApplicationException, ActionCancelled {
+    public void openPage() throws ActionCancelled {
         System.out.println("Выполняется выход...");
         getUserService().logout();
         System.out.println("Успешно\n");

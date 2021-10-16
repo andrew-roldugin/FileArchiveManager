@@ -12,9 +12,7 @@ import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileStorage;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FakeUserStorage;
 import ru.vsu.cs.group7.storage.inMemoryStorage.UniqueLongIdGenerator;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

@@ -13,7 +13,6 @@ import ru.vsu.cs.group7.storage.inMemoryStorage.FileStorage;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
 
 public class FileArchiveService implements Service {
     private final FileArchiveStorage fileArchiveStorage;
