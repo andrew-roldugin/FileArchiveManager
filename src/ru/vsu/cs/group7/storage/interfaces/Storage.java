@@ -9,6 +9,6 @@ public interface Storage<T extends Entity> {
     T save(T item);
     Optional<T> getOneById(Long id);
     Collection<T> getAll();
-    T updateById(T newData);
-    void removeById(Long id);
+    T updateById(Long id, T newData);
+    T removeById(Long id);
 }

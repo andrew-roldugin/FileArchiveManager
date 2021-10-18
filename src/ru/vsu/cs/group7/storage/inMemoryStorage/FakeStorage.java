@@ -6,7 +6,6 @@ import ru.vsu.cs.group7.storage.interfaces.Storage;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public abstract class FakeStorage<T extends Entity> implements Storage<T> {
 
@@ -18,8 +17,10 @@ public abstract class FakeStorage<T extends Entity> implements Storage<T> {
 
     @Override
     public T save(T item) {
-        item.setId(UniqueLongIdGenerator.generate());
-        storage.add(item);
+        if (item.getId() == null) {
+            item.setId(UniqueLongIdGenerator.generate());
+            storage.add(item);
+        }
         return item;
     }
 
@@ -27,7 +28,7 @@ public abstract class FakeStorage<T extends Entity> implements Storage<T> {
     public Optional<T> getOneById(Long id) {
         return storage.stream()
                 .filter(item -> item.getId().equals(id))
-                .findFirst();
+                .findAny();
     }
 
     @Override
@@ -36,19 +37,22 @@ public abstract class FakeStorage<T extends Entity> implements Storage<T> {
     }
 
     @Override
-    public void removeById(Long id) {
-        storage = storage.stream()
-                .filter(item -> !item.getId().equals(id))
-                .collect(Collectors.toList());
+    public T removeById(Long id) {
+        final Entity[] t = new Entity[]{null};
+        storage.stream()
+                .filter(item -> item.getId().equals(id))
+                .findAny()
+                .ifPresent(item -> {
+                            t[0] = item;
+                            storage.remove(item);
+                        }
+                );
+        return (T) t[0];
     }
 
-    protected T updateById(T newData, Consumer<T> action) {
-        Long id = newData.getId();
+    protected T updateById(Long id, Consumer<T> action) {
         Optional<T> oneById = getOneById(id);
-        if (oneById.isPresent()) {
-            action.accept(oneById.get());
-            return oneById.get();
-        }
-        return null;
+        oneById.ifPresentOrElse(action, NotFoundException::new);
+        return oneById.get();
     }
 }

@@ -3,7 +3,9 @@ package ru.vsu.cs.group7.service;
 import ru.vsu.cs.group7.application.consoleApp.config.ApplicationContext;
 import ru.vsu.cs.group7.exception.*;
 import ru.vsu.cs.group7.model.User;
-import ru.vsu.cs.group7.storage.inMemoryStorage.*;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileArchiveStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileStorage;
+import ru.vsu.cs.group7.storage.inMemoryStorage.FakeUserStorage;
 import ru.vsu.cs.group7.storage.interfaces.FileArchiveStorage;
 import ru.vsu.cs.group7.storage.interfaces.FileStorage;
 import ru.vsu.cs.group7.storage.interfaces.UserStorage;
@@ -68,17 +70,17 @@ public class UserService implements Service {
     private User update(Long id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions {
         context.checkLogin();
 
-        User newUser = new User(id, newLogin, newPassword);
-        UserValidator.validate(newUser);
+        if (!(context.getUser().getId().equals(id) || context.getUser().getRole().equals(User.RoleEnum.Admin)))
+            throw new NotAllowedExceptions();
 
         Optional<User> oneByLogin = userStorage.getOneByLogin(newLogin);
         if (oneByLogin.isPresent())
             throw new LoginAlreadyInUseException(newLogin);
 
-        if (!(context.getUser().getId().equals(id) || context.getUser().getRole().equals(User.RoleEnum.Admin)))
-            throw new NotAllowedExceptions();
+        User newUser = new User(null, newLogin, newPassword);
+        UserValidator.validate(newUser);
 
-        return userStorage.updateById(newUser);
+        return userStorage.updateById(id, newUser);
     }
 
     public void removeUserByLogin(String login) throws UserNotAuthorizedException, UserNotFoundException, NotAllowedExceptions {

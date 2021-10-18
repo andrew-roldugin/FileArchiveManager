@@ -8,6 +8,7 @@ import ru.vsu.cs.group7.application.consoleApp.ui.pages.file.UpdateFilePage;
 import ru.vsu.cs.group7.service.FileService;
 
 public class SelectedFileMenu extends BaseMenu {
+
     private final FileService fileService;
 
     public SelectedFileMenu(FileService fileService) {
@@ -20,7 +21,7 @@ public class SelectedFileMenu extends BaseMenu {
                 |---------------------------------------------------------------------------------|
                 | 1) Переименовать файл;                                                          |
                 | 2) Удалить файл;																  |
-                | 3) -> Назад к меню файлы;    												      |
+                | 3) -> Назад к меню архивы;    												      |
                 |               ___________________________________________________               |
                 | 0) Завершение работы;                                                           |
                 |_________________________________________________________________________________|
@@ -37,7 +38,8 @@ public class SelectedFileMenu extends BaseMenu {
 
             case 3 -> {
                 Controller.getContext().setCurrentFile(null);
-                switchMenu(MenusEnum.FileMenu);
+                Controller.getContext().setCurrentArchive(null);
+                switchMenu(MenusEnum.FileArchiveMenu);
             }
         }
     }

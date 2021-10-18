@@ -33,20 +33,15 @@ public class FileService implements Service {
         this(new FakeFileStorage(), new FakeFileArchiveStorage(), context);
     }
 
-    public void addNewFiles(Long fileArchiveId, Collection<String> names) throws UserNotAuthorizedException, NotFoundException, NotAllowedExceptions {
+    public void addNewFiles(Long fileArchiveId, Collection<String> names) throws NotFoundException, NotAllowedExceptions, UserNotAuthorizedException {
         context.checkLogin();
         Optional<FileArchive> fileArchiveOptional = fileArchiveStorage.getOneById(fileArchiveId);
-
-        addNew(names, fileArchiveOptional);
-    }
-
-    private void addNew(Collection<String> names, Optional<FileArchive> fileArchiveOptional) throws NotFoundException, NotAllowedExceptions {
 
         if (fileArchiveOptional.isEmpty())
             throw new NotFoundException("Архив не найден");
         FileArchive fileArchive = fileArchiveOptional.get();
         User owner = fileArchive.getOwner();
-        if (!owner.getId().equals(context.getUser().getId()) && !owner.getRole().equals(User.RoleEnum.Admin))
+        if (!(owner.getId().equals(context.getUser().getId()) || context.getUser().getRole().equals(User.RoleEnum.Admin)))
             throw new NotAllowedExceptions();
 
         names.stream()
@@ -72,11 +67,10 @@ public class FileService implements Service {
 
         Optional<File> oneById = fileStorage.getOneById(fileId);
         if (oneById.isEmpty())
-            throw new NotFoundException("Файл с таким id не найден и не может быть обновлен");
+            throw new NotFoundException("Файл с таким ID не найден и не может быть обновлен");
         File file = oneById.get();
         file.setName(newName);
-
-        return fileStorage.updateById(file);
+        return fileStorage.save(file);
     }
 
     public void removeFileById(Long fileId) {

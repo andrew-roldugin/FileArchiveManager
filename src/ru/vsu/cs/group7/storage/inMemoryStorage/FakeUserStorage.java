@@ -3,7 +3,9 @@ package ru.vsu.cs.group7.storage.inMemoryStorage;
 import ru.vsu.cs.group7.model.User;
 import ru.vsu.cs.group7.storage.interfaces.UserStorage;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 public class FakeUserStorage extends FakeStorage<User> implements UserStorage {
 
@@ -22,8 +24,8 @@ public class FakeUserStorage extends FakeStorage<User> implements UserStorage {
     }
 
     @Override
-    public User updateById(User newUserData) {
-        return updateById(newUserData, user -> {
+    public User updateById(Long userId, User newUserData) {
+        return updateById(userId, user -> {
             user.setLogin(newUserData.getLogin());
             user.setPassword(newUserData.getPassword());
         });

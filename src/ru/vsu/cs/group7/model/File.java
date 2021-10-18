@@ -25,7 +25,7 @@ public class File extends Entity {
     }
 
     public void setName(String name) {
-        if (!(name == null || !name.isBlank()))
+        if (!(name == null || name.isBlank()))
             this.name = name;
     }
 

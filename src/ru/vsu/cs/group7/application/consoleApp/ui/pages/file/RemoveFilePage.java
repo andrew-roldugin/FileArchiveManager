@@ -18,7 +18,7 @@ public class RemoveFilePage extends FilesPages {
         if (currentFile != null) {
             getFileService().removeFileById(currentFile.getId());
             Controller.getContext().setCurrentFile(null);
-            backToMenu(MenusEnum.CurrentFileMenu, getIsWait());
+            backToMenu(MenusEnum.FileMenu, getIsWait());
             return;
         }
 

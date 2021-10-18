@@ -2,6 +2,7 @@ package ru.vsu.cs.group7.service;
 
 import ru.vsu.cs.group7.application.consoleApp.Controller;
 import ru.vsu.cs.group7.application.consoleApp.config.ApplicationContext;
+import ru.vsu.cs.group7.exception.ApplicationException;
 import ru.vsu.cs.group7.exception.NotAllowedExceptions;
 import ru.vsu.cs.group7.exception.NotFoundException;
 import ru.vsu.cs.group7.exception.UserNotAuthorizedException;
@@ -12,6 +13,7 @@ import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileStorage;
 import ru.vsu.cs.group7.storage.interfaces.FileArchiveStorage;
 import ru.vsu.cs.group7.storage.interfaces.FileStorage;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -30,7 +32,7 @@ public class FileArchiveService implements Service {
         this(new FakeFileArchiveStorage(), new FakeFileStorage(), context);
     }
 
-    public FileArchive getOneById(Long id) throws NotFoundException {
+    public FileArchive getOneById(Long id) throws ApplicationException {
         return fileArchiveStorage.getOneById(id).orElseThrow(() -> new NotFoundException("Архив не найден"));
     }
 
@@ -52,9 +54,9 @@ public class FileArchiveService implements Service {
         context.checkLogin();
         Optional<FileArchive> fileArchiveOptional = fileArchiveStorage.getOneById(fileArchiveId);
 
-        if (fileArchiveOptional.isEmpty()) {
+        if (fileArchiveOptional.isEmpty())
             throw new NotFoundException("Архив не найден");
-        }
+
         FileArchive fileArchive = fileArchiveOptional.get();
         Long userId = context.getUser().getId();
         if (!(userId.equals(fileArchive.getOwner().getId()) || context.getUser().getRole().equals(User.RoleEnum.Admin)))
@@ -79,6 +81,6 @@ public class FileArchiveService implements Service {
 
         fileArchive.setName(newName);
 
-        return fileArchiveStorage.updateById(fileArchive);
+        return fileArchiveStorage.save(fileArchive);
     }
 }

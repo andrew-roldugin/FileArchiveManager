@@ -1,11 +1,9 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.menu.common;
 
 import ru.vsu.cs.group7.application.consoleApp.Controller;
-import ru.vsu.cs.group7.application.consoleApp.config.Services;
 import ru.vsu.cs.group7.application.consoleApp.ui.pages.Page;
 import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
-import ru.vsu.cs.group7.service.Service;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -27,8 +25,8 @@ public abstract class BaseMenu {
                 if (getCurrentPage().getIsWait()) {
                     System.out.println("Для продолжения введите любой символ...");
                     getScanner().next();
-                    setCurrentPage(null);
                 }
+                setCurrentPage(null);
             }
         } else {
             System.out.println(content);

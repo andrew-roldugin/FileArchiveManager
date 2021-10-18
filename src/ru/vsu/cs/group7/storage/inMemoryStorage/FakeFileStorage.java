@@ -31,8 +31,8 @@ public class FakeFileStorage extends FakeStorage<File> implements FileStorage {
     }
 
     @Override
-    public File updateById(File newData) {
-        return updateById(newData, file -> {
+    public File updateById(Long fileId, File newData) {
+        return updateById(fileId, file -> {
             file.setName(newData.getName());
         });
     }

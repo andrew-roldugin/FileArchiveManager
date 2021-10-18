@@ -26,8 +26,8 @@ public class FakeFileArchiveStorage extends FakeStorage<FileArchive> implements 
     }
 
     @Override
-    public FileArchive updateById(FileArchive newData) {
-        return updateById(newData, fileArchive -> {
+    public FileArchive updateById(Long fileArchiveId, FileArchive newData) {
+        return updateById(fileArchiveId, fileArchive -> {
             fileArchive.setName(newData.getName());
             fileArchive.setUpdateTime(LocalDate.now());
         });
