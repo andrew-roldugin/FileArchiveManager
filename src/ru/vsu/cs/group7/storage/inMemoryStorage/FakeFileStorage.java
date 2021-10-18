@@ -1,6 +1,7 @@
 package ru.vsu.cs.group7.storage.inMemoryStorage;
 
 import ru.vsu.cs.group7.model.File;
+import ru.vsu.cs.group7.storage.interfaces.FileStorage;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,8 +31,8 @@ public class FakeFileStorage extends FakeStorage<File> implements FileStorage {
     }
 
     @Override
-    public void updateById(File newData) {
-        updateById(newData, file -> {
+    public File updateById(File newData) {
+        return updateById(newData, file -> {
             file.setName(newData.getName());
         });
     }

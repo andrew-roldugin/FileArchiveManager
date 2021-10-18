@@ -4,11 +4,13 @@ import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.AuthMenu;
 import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
+import ru.vsu.cs.group7.service.Service;
+import ru.vsu.cs.group7.service.UserService;
 
 public class LoginPage extends UserPages {
 
-    public LoginPage(AuthMenu authMenu) {
-        super(authMenu, "====================================== Авторизация ======================================");
+    public LoginPage(UserService userService) {
+        super("====================================== Авторизация ======================================", userService);
     }
 
     @Override
@@ -20,6 +22,6 @@ public class LoginPage extends UserPages {
 
         getUserService().login(login, password);
         System.out.println("Успешно\n");
-        backToMenu(getParentMenu(), MenusEnum.UserMenu, getIsWait());
+        backToMenu(MenusEnum.UserMenu, getIsWait());
     }
 }

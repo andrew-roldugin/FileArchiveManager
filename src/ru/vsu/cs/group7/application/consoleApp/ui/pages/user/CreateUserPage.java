@@ -5,13 +5,13 @@ import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.AuthMenu;
 import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
 import ru.vsu.cs.group7.model.User;
+import ru.vsu.cs.group7.service.Service;
+import ru.vsu.cs.group7.service.UserService;
 
 public class CreateUserPage extends UserPages {
 
-    public CreateUserPage(AuthMenu authMenu) {
-        super(authMenu,
-                "====================================== Регистрация ======================================"
-        );
+    public CreateUserPage(UserService userService) {
+        super("====================================== Регистрация ======================================", userService);
     }
 
     @Override
@@ -24,6 +24,6 @@ public class CreateUserPage extends UserPages {
         User user = getUserService().createUser(login, password);
         getUserService().login(user);
         System.out.println("Успешно\n");
-        backToMenu(getParentMenu(), MenusEnum.UserMenu, getIsWait());
+        backToMenu(MenusEnum.UserMenu, getIsWait());
     }
 }

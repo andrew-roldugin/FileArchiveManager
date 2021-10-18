@@ -1,26 +1,28 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric;
 
-import ru.vsu.cs.group7.application.consoleApp.Controller;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.BaseMenu;
 import ru.vsu.cs.group7.application.consoleApp.ui.pages.user.CreateUserPage;
 import ru.vsu.cs.group7.application.consoleApp.ui.pages.user.LoginPage;
 import ru.vsu.cs.group7.service.Service;
+import ru.vsu.cs.group7.service.UserService;
 
 public class AuthMenu extends BaseMenu {
 
-    public AuthMenu(Controller controller, Service userService) {
-        super(controller, userService);
+    private final UserService userService;
+
+    public AuthMenu(UserService userService) {
+        this.userService = userService;
         this.content =
                         """
                          _________________________________________________________________________________
                         /								   Меню авторизации    							  \\
                         |---------------------------------------------------------------------------------|
-                        |Вход не выполнен                                                                 |
+                        | Вход не выполнен                                                                |
                         |---------------------------------------------------------------------------------|
-                        |1) Создать пользователя;                                                         |
-                        |2) Войти;                                                                        |
+                        | 1) Создать пользователя;                                                        |
+                        | 2) Войти;                                                                       |
                         |               ___________________________________________________               |
-                        |0) Завершение работы;                                                            |
+                        | 0) Завершение работы;                                                           |
                         |_________________________________________________________________________________|
                         """;
     }
@@ -30,8 +32,8 @@ public class AuthMenu extends BaseMenu {
         switch (choice) {
             case 0 -> exit();
 
-            case 1 -> setCurrentPage(new CreateUserPage(this));
-            case 2 -> setCurrentPage(new LoginPage(this));
+            case 1 -> setCurrentPage(new CreateUserPage(userService));
+            case 2 -> setCurrentPage(new LoginPage(userService));
         }
     }
 }

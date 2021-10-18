@@ -1,6 +1,7 @@
 package ru.vsu.cs.group7.storage.inMemoryStorage;
 
 import ru.vsu.cs.group7.model.FileArchive;
+import ru.vsu.cs.group7.storage.interfaces.FileArchiveStorage;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -17,12 +18,6 @@ public class FakeFileArchiveStorage extends FakeStorage<FileArchive> implements 
         super(new LinkedList<>());
     }
 
-    public void removeAllByUserId(Long userId) {
-        storage = storage.stream()
-                .filter(fileArchive -> !fileArchive.getOwner().getId().equals(userId))
-                .collect(Collectors.toList());
-    }
-
     @Override
     public List<FileArchive> getAllArchivesByUserId(Long userId) {
         return storage.stream()
@@ -31,8 +26,8 @@ public class FakeFileArchiveStorage extends FakeStorage<FileArchive> implements 
     }
 
     @Override
-    public void updateById(FileArchive newData) {
-        updateById(newData, fileArchive -> {
+    public FileArchive updateById(FileArchive newData) {
+        return updateById(newData, fileArchive -> {
             fileArchive.setName(newData.getName());
             fileArchive.setUpdateTime(LocalDate.now());
         });

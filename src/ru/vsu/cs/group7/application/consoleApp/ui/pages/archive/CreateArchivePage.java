@@ -4,11 +4,12 @@ import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileArchiveMenu;
 import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
+import ru.vsu.cs.group7.service.FileArchiveService;
 
 public class CreateArchivePage extends ArchivesPages {
 
-    public CreateArchivePage(FileArchiveMenu fileArchiveMenu) {
-        super(fileArchiveMenu, "==================================== Создание архива ====================================");
+    public CreateArchivePage(FileArchiveService archiveService) {
+        super("==================================== Создание архива ====================================", archiveService);
     }
 
     @Override
@@ -16,6 +17,6 @@ public class CreateArchivePage extends ArchivesPages {
         System.out.print("Введите имя архива: ");
         String input = readUserInput();
         getFileArchiveService().createArchive(input);
-        backToMenu(getParentMenu(), MenusEnum.FileArchiveMenu, getIsWait());
+        backToMenu(MenusEnum.FileArchiveMenu, getIsWait());
     }
 }

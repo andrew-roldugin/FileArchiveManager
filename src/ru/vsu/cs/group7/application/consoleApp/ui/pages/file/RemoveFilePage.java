@@ -1,18 +1,26 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.pages.file;
 
+import ru.vsu.cs.group7.application.consoleApp.Controller;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
-import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.FileMenu;
 import ru.vsu.cs.group7.exception.ActionCancelled;
-import ru.vsu.cs.group7.exception.ApplicationException;
+import ru.vsu.cs.group7.model.File;
+import ru.vsu.cs.group7.service.FileService;
 
 public class RemoveFilePage extends FilesPages {
 
-    public RemoveFilePage(FileMenu fileMenu) {
-        super(fileMenu, "==================================== Удаление файла =====================================");
+    public RemoveFilePage(FileService fileService) {
+        super("==================================== Удаление файла =====================================", fileService);
     }
 
     @Override
     public void openPage() throws ActionCancelled {
+        File currentFile = Controller.getContext().getCurrentFile();
+        if (currentFile != null) {
+            getFileService().removeFileById(currentFile.getId());
+            Controller.getContext().setCurrentFile(null);
+            backToMenu(MenusEnum.CurrentFileMenu, getIsWait());
+            return;
+        }
 
         System.out.print("Введите id файла: ");
         String input = readUserInput();
@@ -20,7 +28,7 @@ public class RemoveFilePage extends FilesPages {
         try {
             Long fileId = Long.parseLong(input);
             getFileService().removeFileById(fileId);
-            backToMenu(getParentMenu(), MenusEnum.FileMenu, getIsWait());
+            backToMenu(MenusEnum.FileMenu, getIsWait());
         } catch (NumberFormatException ex) {
             System.out.println(ex.getMessage());
         }

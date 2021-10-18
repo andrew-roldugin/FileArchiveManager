@@ -5,7 +5,6 @@ import ru.vsu.cs.group7.model.FileArchive;
 import ru.vsu.cs.group7.model.User;
 import ru.vsu.cs.group7.service.FileArchiveService;
 import ru.vsu.cs.group7.service.FileService;
-import ru.vsu.cs.group7.service.Service;
 import ru.vsu.cs.group7.service.UserService;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileArchiveStorage;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileStorage;
@@ -18,9 +17,9 @@ import java.util.stream.Stream;
 
 public class Services {
 
-    private final Service userService;
-    private final Service fileService;
-    private final Service fileArchiveService;
+    private final UserService userService;
+    private final FileService fileService;
+    private final FileArchiveService fileArchiveService;
 
     public Services(ApplicationContext context) {
         List<User> usersList = Stream.of(
@@ -37,7 +36,7 @@ public class Services {
                 new FileArchive("archive2", usersList.get(1)),
                 new FileArchive("archive3", usersList.get(1)),
                 new FileArchive("archive4", usersList.get(1)),
-                new FileArchive("_new_archive_", usersList.get(2))
+                new FileArchive(1L, "_new_archive_", usersList.get(2))
         ).peek(fileArchive -> fileArchive.setId(UniqueLongIdGenerator.generate())).collect(Collectors.toList());
 
         List<File> files = Stream.of(
@@ -64,15 +63,15 @@ public class Services {
         this.fileArchiveService = new FileArchiveService(fileArchiveStorage, fileStorage, context);
     }
 
-    public Service getUserService() {
+    public UserService getUserService() {
         return userService;
     }
 
-    public Service getFileService() {
+    public FileService getFileService() {
         return fileService;
     }
 
-    public Service getFileArchiveService() {
+    public FileArchiveService getFileArchiveService() {
         return fileArchiveService;
     }
 }

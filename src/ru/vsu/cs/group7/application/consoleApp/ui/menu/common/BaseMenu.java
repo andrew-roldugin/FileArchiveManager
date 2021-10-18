@@ -1,6 +1,7 @@
 package ru.vsu.cs.group7.application.consoleApp.ui.menu.common;
 
 import ru.vsu.cs.group7.application.consoleApp.Controller;
+import ru.vsu.cs.group7.application.consoleApp.config.Services;
 import ru.vsu.cs.group7.application.consoleApp.ui.pages.Page;
 import ru.vsu.cs.group7.exception.ActionCancelled;
 import ru.vsu.cs.group7.exception.ApplicationException;
@@ -11,15 +12,8 @@ import java.util.Scanner;
 
 public abstract class BaseMenu {
 
-    private final Controller controller;
     protected String content;
     private Page currentPage;
-    private final Service service;
-
-    public BaseMenu(Controller controller, Service service) {
-        this.controller = controller;
-        this.service = service;
-    }
 
     public void printMenu() {
         if (currentPage != null) {
@@ -44,27 +38,23 @@ public abstract class BaseMenu {
                 onSelect(choice);
             } catch (InputMismatchException ex) {
                 System.out.println("Некорректный ввод при выборе пункта. Ожидалось число");
-                controller.setScanner(new Scanner(System.in));
+                Controller.setScanner(new Scanner(System.in));
             }
         }
     }
 
-    public void switchMenu(MenusEnum backTo) {
-        controller.getMenuManager().switchMenu(backTo, controller);
+    public static BaseMenu switchMenu(MenusEnum backTo) {
+        return Controller.getMenuManager().switchMenu(backTo);
     }
 
     protected abstract void onSelect(Integer choice);
 
-    public Integer getChoice() {
+    private Integer getChoice() {
         return getScanner().nextInt();
     }
 
     private Scanner getScanner() {
-        return controller.getScanner();
-    }
-
-    public Controller getController() {
-        return controller;
+        return Controller.getScanner();
     }
 
     public void setCurrentPage(Page currentPage) {
@@ -73,10 +63,6 @@ public abstract class BaseMenu {
 
     public Page getCurrentPage() {
         return currentPage;
-    }
-
-    public Service getService() {
-        return service;
     }
 
     public void exit() {

@@ -1,7 +1,7 @@
-package ru.vsu.cs.group7.storage.inMemoryStorage;
+package ru.vsu.cs.group7.storage.interfaces;
 
 import ru.vsu.cs.group7.model.User;
-import ru.vsu.cs.group7.storage.Storage;
+import ru.vsu.cs.group7.storage.interfaces.Storage;
 
 import java.util.Optional;
 

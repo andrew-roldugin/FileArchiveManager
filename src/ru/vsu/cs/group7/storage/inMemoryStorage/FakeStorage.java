@@ -1,7 +1,8 @@
 package ru.vsu.cs.group7.storage.inMemoryStorage;
 
+import ru.vsu.cs.group7.exception.NotFoundException;
 import ru.vsu.cs.group7.model.Entity;
-import ru.vsu.cs.group7.storage.Storage;
+import ru.vsu.cs.group7.storage.interfaces.Storage;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -16,9 +17,10 @@ public abstract class FakeStorage<T extends Entity> implements Storage<T> {
     }
 
     @Override
-    public void save(T item) {
+    public T save(T item) {
         item.setId(UniqueLongIdGenerator.generate());
         storage.add(item);
+        return item;
     }
 
     @Override
@@ -40,8 +42,13 @@ public abstract class FakeStorage<T extends Entity> implements Storage<T> {
                 .collect(Collectors.toList());
     }
 
-    protected void updateById(T newData, Consumer<T> action) {
+    protected T updateById(T newData, Consumer<T> action) {
         Long id = newData.getId();
-        getOneById(id).ifPresent(action);
+        Optional<T> oneById = getOneById(id);
+        if (oneById.isPresent()) {
+            action.accept(oneById.get());
+            return oneById.get();
+        }
+        return null;
     }
 }

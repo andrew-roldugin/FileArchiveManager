@@ -5,5 +5,7 @@ public enum MenusEnum {
     UserMenu,
     FileArchiveMenu,
     AuthMenu,
+    CurrentArchiveMenu,
+    CurrentFileMenu,
     FileMenu
 }

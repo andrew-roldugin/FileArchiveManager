@@ -9,8 +9,8 @@ import ru.vsu.cs.group7.model.FileArchive;
 import ru.vsu.cs.group7.model.User;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileArchiveStorage;
 import ru.vsu.cs.group7.storage.inMemoryStorage.FakeFileStorage;
-import ru.vsu.cs.group7.storage.inMemoryStorage.FileArchiveStorage;
-import ru.vsu.cs.group7.storage.inMemoryStorage.FileStorage;
+import ru.vsu.cs.group7.storage.interfaces.FileArchiveStorage;
+import ru.vsu.cs.group7.storage.interfaces.FileStorage;
 
 import java.util.Collection;
 import java.util.List;
@@ -55,10 +55,10 @@ public class FileService implements Service {
                 .forEach(fileStorage::save);
     }
 
-    public Optional<File> getFileById(Long id) throws UserNotAuthorizedException {
+    public File getFileById(Long id) throws UserNotAuthorizedException, NotFoundException {
         context.checkLogin();
 
-        return fileStorage.getOneById(id);
+        return fileStorage.getOneById(id).orElseThrow(() -> new NotFoundException("Файл не найден"));
     }
 
     public List<File> getAllFilesInArchiveById(Long fileArchiveId) throws UserNotAuthorizedException {
@@ -67,24 +67,19 @@ public class FileService implements Service {
         return fileStorage.getAllFilesInFileArchive(fileArchiveId).stream().toList();
     }
 
-    public void updateById(Long fileId, String newName) throws NotFoundException, UserNotAuthorizedException {
+    public File updateById(Long fileId, String newName) throws NotFoundException, UserNotAuthorizedException {
         context.checkLogin();
 
         Optional<File> oneById = fileStorage.getOneById(fileId);
         if (oneById.isEmpty())
             throw new NotFoundException("Файл с таким id не найден и не может быть обновлен");
-        oneById.ifPresent(file -> {
-            file.setName(newName);
-            fileStorage.updateById(file);
-        });
+        File file = oneById.get();
+        file.setName(newName);
+
+        return fileStorage.updateById(file);
     }
 
     public void removeFileById(Long fileId) {
         fileStorage.removeById(fileId);
-    }
-
-    @Override
-    public ApplicationContext getApplicationContext() {
-        return context;
     }
 }

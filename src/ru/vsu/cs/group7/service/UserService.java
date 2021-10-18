@@ -4,6 +4,9 @@ import ru.vsu.cs.group7.application.consoleApp.config.ApplicationContext;
 import ru.vsu.cs.group7.exception.*;
 import ru.vsu.cs.group7.model.User;
 import ru.vsu.cs.group7.storage.inMemoryStorage.*;
+import ru.vsu.cs.group7.storage.interfaces.FileArchiveStorage;
+import ru.vsu.cs.group7.storage.interfaces.FileStorage;
+import ru.vsu.cs.group7.storage.interfaces.UserStorage;
 import ru.vsu.cs.group7.validator.UserValidator;
 
 import java.util.List;
@@ -75,8 +78,7 @@ public class UserService implements Service {
         if (!(context.getUser().getId().equals(id) || context.getUser().getRole().equals(User.RoleEnum.Admin)))
             throw new NotAllowedExceptions();
 
-        userStorage.updateById(newUser);
-        return newUser;
+        return userStorage.updateById(newUser);
     }
 
     public void removeUserByLogin(String login) throws UserNotAuthorizedException, UserNotFoundException, NotAllowedExceptions {
@@ -99,6 +101,7 @@ public class UserService implements Service {
         if (userId.equals(context.getUser().getId()))
             context.setUser(null);
         userStorage.removeById(userId);
+
         fileArchiveStorage.getAllArchivesByUserId(userId).forEach(fileArchive -> {
             fileStorage.removeAllByArchiveId(fileArchive.getId());
             fileArchiveStorage.removeById(fileArchive.getId());
@@ -125,9 +128,5 @@ public class UserService implements Service {
     public void logout() {
         if (context.isLoggedIn())
             context.setUser(null);
-    }
-
-    public ApplicationContext getApplicationContext() {
-        return context;
     }
 }

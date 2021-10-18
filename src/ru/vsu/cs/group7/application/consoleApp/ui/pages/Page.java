@@ -2,6 +2,7 @@ package ru.vsu.cs.group7.application.consoleApp.ui.pages;
 
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
+import ru.vsu.cs.group7.application.consoleApp.Controller;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.BaseMenu;
 import ru.vsu.cs.group7.application.consoleApp.ui.menu.common.MenusEnum;
 import ru.vsu.cs.group7.exception.ActionCancelled;
@@ -12,15 +13,12 @@ import java.util.Collection;
 import java.util.Scanner;
 
 public abstract class Page {
+
     private final String header;
-    private final Scanner scanner;
-    private final BaseMenu parentMenu;
     protected boolean isWait;
 
-    public Page(BaseMenu parentMenu, String header) {
+    public Page(String header) {
         this.header = header;
-        this.scanner = parentMenu.getController().getScanner();
-        this.parentMenu = parentMenu;
     }
 
     public abstract void openPage() throws ApplicationException, ActionCancelled;
@@ -38,27 +36,23 @@ public abstract class Page {
         return next;
     }
 
-    public BaseMenu getParentMenu() {
-        return parentMenu;
-    }
-
-    public void backToMenu(BaseMenu currMenu, MenusEnum backTo, boolean wait) {
+    public static void backToMenu(MenusEnum switchTo, boolean wait) {
         if (wait) {
             System.out.println("Для возврата в меню введите любой символ...");
-            scanner.next();
+            getScanner().next();
         }
-        currMenu.switchMenu(backTo);
+        BaseMenu.switchMenu(switchTo);
     }
 
-    public Scanner getScanner() {
-        return scanner;
+    public static Scanner getScanner() {
+        return Controller.getScanner();
     }
 
     public boolean getIsWait() {
         return isWait;
     }
 
-    protected <T extends Entity> void renderTable(String[] header, Collection<T> collection) {
+    protected <T extends Entity> void printTable(String[] header, Collection<T> collection) {
         AsciiTable at = new AsciiTable();
         at.addRule();
         at.addRow(header);
