@@ -17,7 +17,7 @@ public class EditUserPage extends UserPages {
     @Override
     public void openPage() throws ApplicationException, ActionCancelled {
         Long userId = null;
-        if (Controller.getContext().getUser().getRole().equals(User.RoleEnum.Admin)) {
+        if (Controller.getInstance().getContext().getUser().getRole().equals(User.RoleEnum.Admin)) {
             System.out.print("Введите id пользователя: ");
             try {
                 userId = Long.parseLong(readUserInput());

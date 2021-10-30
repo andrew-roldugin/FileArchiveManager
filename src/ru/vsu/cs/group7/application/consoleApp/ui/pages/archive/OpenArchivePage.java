@@ -20,7 +20,7 @@ public class OpenArchivePage extends ArchivesPages {
         try {
             Long id = Long.parseLong(input);
             FileArchive archive = getFileArchiveService().getOneById(id);
-            Controller.getContext().setCurrentArchive(archive);
+            Controller.getInstance().getContext().setCurrentArchive(archive);
             backToMenu(MenusEnum.CurrentArchiveMenu, getIsWait());
         }catch (NumberFormatException ex){
             System.out.println(ex.getMessage());

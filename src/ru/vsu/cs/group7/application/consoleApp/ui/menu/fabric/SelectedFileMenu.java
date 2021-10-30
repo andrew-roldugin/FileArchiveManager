@@ -13,7 +13,7 @@ public class SelectedFileMenu extends BaseMenu {
 
     public SelectedFileMenu(FileService fileService) {
         this.fileService = fileService;
-        String name = Controller.getContext().getCurrentFile().getName();
+        String name = Controller.getInstance().getContext().getCurrentFile().getName();
 
         this.content = String.format("""
                  _________________________________________________________________________________
@@ -21,7 +21,7 @@ public class SelectedFileMenu extends BaseMenu {
                 |---------------------------------------------------------------------------------|
                 | 1) Переименовать файл;                                                          |
                 | 2) Удалить файл;																  |
-                | 3) -> Назад к меню архивы;    												      |
+                | 3) -> Назад к меню архивы;    											      |
                 |               ___________________________________________________               |
                 | 0) Завершение работы;                                                           |
                 |_________________________________________________________________________________|
@@ -37,8 +37,8 @@ public class SelectedFileMenu extends BaseMenu {
             case 2 -> setCurrentPage(new RemoveFilePage(fileService));
 
             case 3 -> {
-                Controller.getContext().setCurrentFile(null);
-                Controller.getContext().setCurrentArchive(null);
+                Controller.getInstance().getContext().setCurrentFile(null);
+                Controller.getInstance().getContext().setCurrentArchive(null);
                 switchMenu(MenusEnum.FileArchiveMenu);
             }
         }

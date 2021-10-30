@@ -22,7 +22,7 @@ public class FilesInArchivePage extends FilesPages {
 
     @Override
     public void openPage() throws ApplicationException, ActionCancelled {
-        FileArchive currentArchive = Controller.getContext().getCurrentArchive();
+        FileArchive currentArchive = Controller.getInstance().getContext().getCurrentArchive();
         if (currentArchive == null) {
             System.out.print("Введите id архива: ");
             String input = readUserInput();
@@ -44,7 +44,7 @@ public class FilesInArchivePage extends FilesPages {
         if (next.equals("y"))
             BaseMenu.switchMenu(MenusEnum.FileMenu).setCurrentPage(new SelectFilePage(getFileService()));
         else
-            Controller.getMenuManager().getCurrentMenu().setCurrentPage(null);
+            Controller.getInstance().getMenuManager().getCurrentMenu().setCurrentPage(null);
 //            BaseMenu.switchMenu(MenusEnum.FileMenu);
     }
 }

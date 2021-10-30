@@ -16,12 +16,12 @@ import java.util.Optional;
 
 public class UserService implements Service {
 
-    private final UserStorage userStorage;
-    private final FileArchiveStorage fileArchiveStorage;
-    private final FileStorage fileStorage;
+    private final UserStorage<Long> userStorage;
+    private final FileArchiveStorage<Long> fileArchiveStorage;
+    private final FileStorage<Long> fileStorage;
     private final ApplicationContext context;
 
-    public UserService(UserStorage userStorage, FileArchiveStorage fileArchiveStorage, FileStorage fileStorage, ApplicationContext context) {
+    public UserService(UserStorage<Long> userStorage, FileArchiveStorage<Long> fileArchiveStorage, FileStorage<Long> fileStorage, ApplicationContext context) {
         this.userStorage = userStorage;
         this.fileArchiveStorage = fileArchiveStorage;
         this.fileStorage = fileStorage;

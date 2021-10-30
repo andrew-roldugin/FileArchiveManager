@@ -4,6 +4,6 @@ import ru.vsu.cs.group7.model.FileArchive;
 
 import java.util.List;
 
-public interface FileArchiveStorage extends Storage<FileArchive> {
-    List<FileArchive> getAllArchivesByUserId(Long id);
+public interface FileArchiveStorage<ID> extends Storage<FileArchive, ID> {
+    List<FileArchive> getAllArchivesByUserId(ID id);
 }

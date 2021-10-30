@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FakeFileStorage extends FakeStorage<File> implements FileStorage {
+public class FakeFileStorage extends FakeStorage<File, Long> implements FileStorage<Long> {
 
     public FakeFileStorage(List<File> storage) {
         super(storage);

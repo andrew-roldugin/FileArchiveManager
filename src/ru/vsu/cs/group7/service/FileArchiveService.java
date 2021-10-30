@@ -18,11 +18,12 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class FileArchiveService implements Service {
-    private final FileArchiveStorage fileArchiveStorage;
-    private final FileStorage fileStorage;
+
+    private final FileArchiveStorage<Long> fileArchiveStorage;
+    private final FileStorage<Long> fileStorage;
     private final ApplicationContext context;
 
-    public FileArchiveService(FileArchiveStorage fileArchiveStorage, FileStorage fileStorage, ApplicationContext context) {
+    public FileArchiveService(FileArchiveStorage<Long> fileArchiveStorage, FileStorage<Long> fileStorage, ApplicationContext context) {
         this.fileArchiveStorage = fileArchiveStorage;
         this.fileStorage = fileStorage;
         this.context = context;
@@ -37,7 +38,7 @@ public class FileArchiveService implements Service {
     }
 
     public Collection<FileArchive> getAllArchives() {
-        User user = Controller.getContext().getUser();
+        User user = Controller.getInstance().getContext().getUser();
         if (user.getRole().equals(User.RoleEnum.Admin))
             return fileArchiveStorage.getAll();
         return fileArchiveStorage.getAllArchivesByUserId(user.getId()).stream().toList();
@@ -64,6 +65,7 @@ public class FileArchiveService implements Service {
 
         Long archiveId = fileArchive.getId();
         fileArchiveStorage.removeById(archiveId);
+        FileArchive archive = fileArchiveStorage.updateById(1L, new FileArchive(null, null));
         fileStorage.removeAllByArchiveId(archiveId);
     }
 

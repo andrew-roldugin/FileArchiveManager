@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class FakeUserStorage extends FakeStorage<User> implements UserStorage {
+public class FakeUserStorage extends FakeStorage<User, Long> implements UserStorage<Long> {
 
     public FakeUserStorage() {
         super(new LinkedList<>());

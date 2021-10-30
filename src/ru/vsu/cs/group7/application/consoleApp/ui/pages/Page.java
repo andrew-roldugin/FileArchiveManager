@@ -45,7 +45,7 @@ public abstract class Page {
     }
 
     public static Scanner getScanner() {
-        return Controller.getScanner();
+        return Controller.getInstance().getScanner();
     }
 
     public boolean getIsWait() {

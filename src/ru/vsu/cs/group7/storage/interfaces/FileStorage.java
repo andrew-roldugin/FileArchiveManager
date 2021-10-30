@@ -4,7 +4,7 @@ import ru.vsu.cs.group7.model.File;
 
 import java.util.List;
 
-public interface FileStorage extends Storage<File> {
+public interface FileStorage<ID> extends Storage<File, ID> {
     List<File> getAllFilesInFileArchive(Long fileArchiveId);
     void removeAllByArchiveId(Long archiveId);
 }

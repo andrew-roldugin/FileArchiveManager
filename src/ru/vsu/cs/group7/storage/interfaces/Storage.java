@@ -5,10 +5,10 @@ import ru.vsu.cs.group7.model.Entity;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface Storage<T extends Entity> {
+public interface Storage<T extends Entity, ID> {
     T save(T item);
-    Optional<T> getOneById(Long id);
+    Optional<T> getOneById(ID id);
     Collection<T> getAll();
-    T updateById(Long id, T newData);
-    T removeById(Long id);
+    T updateById(ID id, T newData);
+    T removeById(ID id);
 }

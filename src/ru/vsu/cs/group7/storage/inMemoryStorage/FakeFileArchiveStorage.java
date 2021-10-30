@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FakeFileArchiveStorage extends FakeStorage<FileArchive> implements FileArchiveStorage {
+public class FakeFileArchiveStorage extends FakeStorage<FileArchive, Long> implements FileArchiveStorage<Long> {
 
     public FakeFileArchiveStorage(List<FileArchive> storage) {
         super(storage);
@@ -20,9 +20,9 @@ public class FakeFileArchiveStorage extends FakeStorage<FileArchive> implements 
 
     @Override
     public List<FileArchive> getAllArchivesByUserId(Long userId) {
-        return storage.stream()
-                .filter(fileArchive -> fileArchive.getOwner().getId().equals(userId))
-                .collect(Collectors.toList());
+            return storage.stream()
+                    .filter(fileArchive -> fileArchive.getOwner().getId().equals(userId))
+                    .collect(Collectors.toList());
     }
 
     @Override

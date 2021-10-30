@@ -18,7 +18,7 @@ public class AddFilePage extends FilesPages {
 
     @Override
     public void openPage() throws ApplicationException, ActionCancelled {
-        FileArchive currentArchive = Controller.getContext().getCurrentArchive();
+        FileArchive currentArchive = Controller.getInstance().getContext().getCurrentArchive();
         if (currentArchive != null) {
             getScanner().nextLine();
             System.out.print("Введите имена файлов через пробел: ");

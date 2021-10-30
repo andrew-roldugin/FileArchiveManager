@@ -14,10 +14,10 @@ public class RemoveArchivePage extends ArchivesPages {
 
     @Override
     public void openPage() throws ApplicationException, ActionCancelled {
-        FileArchive currentArchive = Controller.getContext().getCurrentArchive();
+        FileArchive currentArchive = Controller.getInstance().getContext().getCurrentArchive();
         if (currentArchive != null) {
             getFileArchiveService().removeById(currentArchive.getId());
-            Controller.getContext().setCurrentArchive(null);
+            Controller.getInstance().getContext().setCurrentArchive(null);
             backToMenu(MenusEnum.FileArchiveMenu, getIsWait());
             return;
         }

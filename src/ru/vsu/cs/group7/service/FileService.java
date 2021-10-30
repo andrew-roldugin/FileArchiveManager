@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 
 public class FileService implements Service {
 
-    private final FileStorage fileStorage;
-    private final FileArchiveStorage fileArchiveStorage;
+    private final FileStorage<Long> fileStorage;
+    private final FileArchiveStorage<Long> fileArchiveStorage;
     private final ApplicationContext context;
 
-    public FileService(FileStorage fileStorage, FileArchiveStorage fileArchiveStorage, ApplicationContext context) {
+    public FileService(FileStorage<Long> fileStorage, FileArchiveStorage<Long> fileArchiveStorage, ApplicationContext context) {
         this.fileStorage = fileStorage;
         this.fileArchiveStorage = fileArchiveStorage;
         this.context = context;

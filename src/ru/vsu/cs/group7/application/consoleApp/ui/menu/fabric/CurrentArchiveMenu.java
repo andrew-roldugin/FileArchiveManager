@@ -16,7 +16,7 @@ public class CurrentArchiveMenu extends FileArchiveMenu {
     public CurrentArchiveMenu(FileArchiveService fileArchiveService, FileService fileService) {
         super(fileArchiveService);
         this.fileService = fileService;
-        String name = Controller.getContext().getCurrentArchive().getName();
+        String name = Controller.getInstance().getContext().getCurrentArchive().getName();
         this.content = String.format("""
                  _________________________________________________________________________________
                 / Открыт архив: %s\\
@@ -45,7 +45,8 @@ public class CurrentArchiveMenu extends FileArchiveMenu {
             case 4 -> setCurrentPage(new AddFilePage(fileService));
 
             case 5 -> {
-                Controller.getContext().setCurrentArchive(null);
+                Controller.getInstance().getContext().setCurrentArchive(null);
+                Controller.getInstance().getContext().setCurrentFile(null);
                 switchMenu(MenusEnum.FileArchiveMenu);
             }
         }

@@ -1,5 +1,7 @@
 package ru.vsu.cs.group7.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -8,6 +10,7 @@ public class File extends Entity {
     private String name;
     private final LocalDate appendTime;
     private final FileArchive fileArchive;
+
 
     public File(Long id, FileArchive fileArchive, String name, LocalDate appendTime) {
         super(id);

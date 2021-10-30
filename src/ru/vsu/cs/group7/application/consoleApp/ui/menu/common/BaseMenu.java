@@ -36,13 +36,13 @@ public abstract class BaseMenu {
                 onSelect(choice);
             } catch (InputMismatchException ex) {
                 System.out.println("Некорректный ввод при выборе пункта. Ожидалось число");
-                Controller.setScanner(new Scanner(System.in));
+                Controller.getInstance().setScanner(new Scanner(System.in));
             }
         }
     }
 
     public static BaseMenu switchMenu(MenusEnum backTo) {
-        return Controller.getMenuManager().switchMenu(backTo);
+        return Controller.getInstance().getMenuManager().switchMenu(backTo);
     }
 
     protected abstract void onSelect(Integer choice);
@@ -52,7 +52,7 @@ public abstract class BaseMenu {
     }
 
     private Scanner getScanner() {
-        return Controller.getScanner();
+        return Controller.getInstance().getScanner();
     }
 
     public void setCurrentPage(Page currentPage) {

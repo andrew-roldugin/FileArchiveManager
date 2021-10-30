@@ -6,7 +6,7 @@ public class MainMenu extends BaseMenu {
 
     @Override
     public void printMenu() {
-        if (Controller.isLoggedIn())
+        if (Controller.getInstance().isLoggedIn())
             switchMenu(MenusEnum.UserMenu);
         else
             switchMenu(MenusEnum.AuthMenu);

@@ -16,7 +16,7 @@ public class RemoveUserPage extends UserPages {
 
     @Override
     public void openPage() throws ApplicationException, ActionCancelled {
-        if (Controller.getContext().getUser().getRole().equals(User.RoleEnum.Admin)) {
+        if (Controller.getInstance().getContext().getUser().getRole().equals(User.RoleEnum.Admin)) {
 
             System.out.print("Введите логин или id пользователя: ");
             String input = readUserInput();

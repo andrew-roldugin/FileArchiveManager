@@ -7,7 +7,7 @@ import ru.vsu.cs.group7.storage.interfaces.Storage;
 import java.util.*;
 import java.util.function.Consumer;
 
-public abstract class FakeStorage<T extends Entity> implements Storage<T> {
+public abstract class FakeStorage<T extends Entity, ID> implements Storage<T, ID> {
 
     protected List<T> storage;
 
@@ -25,7 +25,7 @@ public abstract class FakeStorage<T extends Entity> implements Storage<T> {
     }
 
     @Override
-    public Optional<T> getOneById(Long id) {
+    public Optional<T> getOneById(ID id) {
         return storage.stream()
                 .filter(item -> item.getId().equals(id))
                 .findAny();
@@ -37,7 +37,7 @@ public abstract class FakeStorage<T extends Entity> implements Storage<T> {
     }
 
     @Override
-    public T removeById(Long id) {
+    public T removeById(ID id) {
         final Entity[] t = new Entity[]{null};
         storage.stream()
                 .filter(item -> item.getId().equals(id))
@@ -50,7 +50,7 @@ public abstract class FakeStorage<T extends Entity> implements Storage<T> {
         return (T) t[0];
     }
 
-    protected T updateById(Long id, Consumer<T> action) {
+    protected T updateById(ID id, Consumer<T> action) {
         Optional<T> oneById = getOneById(id);
         oneById.ifPresentOrElse(action, NotFoundException::new);
         return oneById.get();

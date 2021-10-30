@@ -14,10 +14,10 @@ public class RemoveFilePage extends FilesPages {
 
     @Override
     public void openPage() throws ActionCancelled {
-        File currentFile = Controller.getContext().getCurrentFile();
+        File currentFile = Controller.getInstance().getContext().getCurrentFile();
         if (currentFile != null) {
             getFileService().removeFileById(currentFile.getId());
-            Controller.getContext().setCurrentFile(null);
+            Controller.getInstance().getContext().setCurrentFile(null);
             backToMenu(MenusEnum.FileMenu, getIsWait());
             return;
         }

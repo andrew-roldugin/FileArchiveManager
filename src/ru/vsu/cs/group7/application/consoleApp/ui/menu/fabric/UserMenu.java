@@ -17,7 +17,7 @@ public class UserMenu extends BaseMenu {
 
     public UserMenu(UserService userService) {
         this.userService = userService;
-        String login = Controller.getContext().getUser().getLogin();
+        String login = Controller.getInstance().getContext().getUser().getLogin();
         this.content = String.format(
                 """
                          _________________________________________________________________________________

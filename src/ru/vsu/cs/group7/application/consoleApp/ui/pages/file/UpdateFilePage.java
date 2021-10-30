@@ -16,13 +16,13 @@ public class UpdateFilePage extends FilesPages {
 
     @Override
     public void openPage() throws ApplicationException, ActionCancelled {
-        File currentFile = Controller.getContext().getCurrentFile();
+        File currentFile = Controller.getInstance().getContext().getCurrentFile();
         if (currentFile != null) {
             System.out.print("Введите новое имя файла: ");
             String newName = readUserInput();
 
             File file = getFileService().updateById(currentFile.getId(), newName);
-            Controller.getContext().setCurrentFile(file);
+            Controller.getInstance().getContext().setCurrentFile(file);
             backToMenu(MenusEnum.CurrentFileMenu, getIsWait());
             return;
         }

@@ -20,7 +20,7 @@ public class SelectFilePage extends FilesPages {
         try {
             Long id = Long.parseLong(input);
             File file = getFileService().getFileById(id);
-            Controller.getContext().setCurrentFile(file);
+            Controller.getInstance().getContext().setCurrentFile(file);
             backToMenu(MenusEnum.CurrentFileMenu, getIsWait());
         } catch (NumberFormatException ex) {
             System.out.println(ex.getMessage());

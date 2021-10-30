@@ -6,9 +6,8 @@ import ru.vsu.cs.group7.application.consoleApp.ui.menu.fabric.*;
 
 public class MenuFabric {
 
-    public static BaseMenu createMenu(MenusEnum menu) {
+    public static BaseMenu createMenu(MenusEnum menu, Services services) {
         BaseMenu m = null;
-        Services services = Controller.getServices();
         switch (menu) {
             case MainMenu -> m = new MainMenu();
             case FileMenu -> m = new FileMenu(services.getFileService());

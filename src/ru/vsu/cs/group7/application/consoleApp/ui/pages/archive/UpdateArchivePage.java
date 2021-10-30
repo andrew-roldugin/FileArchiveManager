@@ -15,12 +15,12 @@ public class UpdateArchivePage extends ArchivesPages {
 
     @Override
     public void openPage() throws ApplicationException, ActionCancelled {
-        FileArchive currentArchive = Controller.getContext().getCurrentArchive();
+        FileArchive currentArchive = Controller.getInstance().getContext().getCurrentArchive();
         if (currentArchive != null){
             System.out.print("Введите новое имя архива: ");
             String newName = readUserInput();
             FileArchive archive = getFileArchiveService().update(currentArchive.getId(), newName);
-            Controller.getContext().setCurrentArchive(archive);
+            Controller.getInstance().getContext().setCurrentArchive(archive);
             backToMenu(MenusEnum.CurrentArchiveMenu, getIsWait());
             return;
         }
