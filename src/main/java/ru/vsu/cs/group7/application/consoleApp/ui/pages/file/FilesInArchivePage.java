@@ -39,12 +39,16 @@ public class FilesInArchivePage extends FilesPages {
     private void print(Long currentArchive) throws UserNotAuthorizedException {
         List<File> files = getFileService().getAllFilesInArchiveById(currentArchive);
         printTable(new String[]{"ID", "Название", "Дата добавления"}, files);
-        System.out.println("Хотите выбрать конкретный файл для работы? (y/n)");
-        String next = getScanner().next();
-        if (next.equals("y"))
-            BaseMenu.switchMenu(MenusEnum.FileMenu).setCurrentPage(new SelectFilePage(getFileService()));
-        else
-            Controller.getInstance().getMenuManager().getCurrentMenu().setCurrentPage(null);
-//            BaseMenu.switchMenu(MenusEnum.FileMenu);
+        if (!files.isEmpty()) {
+            System.out.println("Хотите выбрать конкретный файл для работы? (y/n)");
+            String next = getScanner().next();
+            if (next.equals("y"))
+                BaseMenu.switchMenu(MenusEnum.FileMenu).setCurrentPage(new SelectFilePage(getFileService()));
+            else
+                Controller.getInstance().getMenuManager().getCurrentMenu().setCurrentPage(null);
+        } else {
+            System.out.println("Пока нет данных...");
+            BaseMenu.switchMenu(MenusEnum.FileMenu);
+        }
     }
 }

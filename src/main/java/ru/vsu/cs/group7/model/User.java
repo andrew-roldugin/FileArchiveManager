@@ -11,7 +11,7 @@ public class User extends Entity {
     @Column(name = "password")
     private String password;
     @Column(name = "role")
-    private RoleEnum role = RoleEnum.User;
+    private RoleEnum role;
 
     public User(Long id, String login, String password, RoleEnum role) {
         super(id);

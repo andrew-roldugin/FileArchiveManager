@@ -12,11 +12,18 @@ import ru.vsu.cs.group7.storage.interfaces.UserStorage;
 
 public class Services {
 
+    private static Services INSTANCE;
     private final UserService userService;
     private final FileService fileService;
     private final FileArchiveService fileArchiveService;
 
-    public Services(ApplicationContext context) {
+    public static Services getInstance(ApplicationContext context) {
+        if (INSTANCE == null)
+            INSTANCE = new Services(context);
+        return INSTANCE;
+    }
+
+    private Services(ApplicationContext context) {
 //        List<User> usersList = Stream.of(
 //                new User("user", "usr1"),
 //                new User("admin", "pass", User.RoleEnum.Admin),

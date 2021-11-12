@@ -7,12 +7,22 @@ import ru.vsu.cs.group7.model.User;
 
 public class ApplicationContext {
 
+    private static ApplicationContext INSTANCE;
     private User user;
     private File currentFile;
     private FileArchive currentArchive;
 
+    private ApplicationContext() {}
+
+    public static ApplicationContext getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new ApplicationContext();
+        return INSTANCE;
+    }
+
     public void checkLogin() throws UserNotAuthorizedException {
-        if (!isLoggedIn()) throw new UserNotAuthorizedException();
+
+//        if (!isLoggedIn()) throw new UserNotAuthorizedException();
     }
 
     public boolean isLoggedIn() {

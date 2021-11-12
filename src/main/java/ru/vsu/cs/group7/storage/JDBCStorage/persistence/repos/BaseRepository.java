@@ -1,11 +1,11 @@
 package ru.vsu.cs.group7.storage.JDBCStorage.persistence.repos;
 
-import org.antlr.v4.runtime.misc.Pair;
 import ru.vsu.cs.group7.model.Entity;
 import ru.vsu.cs.group7.storage.JDBCStorage.mappers.MapperFabric;
 import ru.vsu.cs.group7.storage.JDBCStorage.persistence.ConnectionManager;
 import ru.vsu.cs.group7.storage.JDBCStorage.persistence.Extractor;
 import ru.vsu.cs.group7.storage.JDBCStorage.persistence.MySQLQueryGenerator;
+import ru.vsu.cs.group7.storage.JDBCStorage.persistence.Pair;
 import ru.vsu.cs.group7.storage.interfaces.Storage;
 
 import java.lang.reflect.ParameterizedType;
@@ -27,6 +27,13 @@ public abstract class BaseRepository<T extends Entity, ID> implements Storage<T,
         ) {
             MapperFabric.getMapper(getCurrentClass()).fromJavaObjectToSQL(preparedStatement, item);
             preparedStatement.execute();
+            final String sql1 = "SELECT MAX(`id`) as lst_id FROM " + getCurrentClass().getSimpleName().toLowerCase();
+            preparedStatement.execute(sql1);
+            final ResultSet resultSet = preparedStatement.getResultSet();
+            Long id = null;
+            while (resultSet.next())
+                id = resultSet.getLong("lst_id");
+            item.setId(id);
             return item;
         }
     }

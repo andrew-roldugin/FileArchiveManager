@@ -33,7 +33,7 @@ public class UserService implements Service {
         this(new FakeUserStorage(), new FakeFileArchiveStorage(), new FakeFileStorage(), context);
     }
 
-    public User createUser(String login, String password) throws UserValidationException, UserAlreadyExistsException, SQLException, NoSuchFieldException, IllegalAccessException {
+    public User createUser(String login, String password) throws ApplicationException, SQLException, NoSuchFieldException, IllegalAccessException {
         User user = new User(login, password);
         UserValidator.validate(user);
         if (userStorage.getOneByLogin(login).isPresent()) {
@@ -58,26 +58,26 @@ public class UserService implements Service {
         return userStorage.getOneById(id).orElseThrow(() -> new UserNotFoundException("с id", id.toString()));
     }
 
-    public void updateCurrentUser(String newLogin, String newPassword) throws UserValidationException, UserNotAuthorizedException, LoginAlreadyInUseException, NotAllowedExceptions, SQLException, NoSuchFieldException, IllegalAccessException {
+    public void updateCurrentUser(String newLogin, String newPassword) throws ApplicationException, SQLException, NoSuchFieldException, IllegalAccessException {
         User newUser = update(context.getUser().getId(), newLogin, newPassword);
         context.setUser(newUser);
     }
 
-    public User updateById(Long id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions, SQLException, NoSuchFieldException, IllegalAccessException {
+    public User updateById(Long id, String newLogin, String newPassword) throws ApplicationException, SQLException, NoSuchFieldException, IllegalAccessException {
         return update(id, newLogin, newPassword);
     }
 
-    private User update(Long id, String newLogin, String newPassword) throws LoginAlreadyInUseException, UserValidationException, UserNotAuthorizedException, NotAllowedExceptions, SQLException, NoSuchFieldException, IllegalAccessException {
+    private User update(Long id, String newLogin, String newPassword) throws ApplicationException, SQLException, NoSuchFieldException, IllegalAccessException {
         context.checkLogin();
 
         if (!(context.getUser().getId().equals(id) || context.getUser().getRole().equals(User.RoleEnum.Admin)))
             throw new NotAllowedExceptions();
 
         Optional<User> oneByLogin = userStorage.getOneByLogin(newLogin);
-        if (oneByLogin.isPresent())
+        if (oneByLogin.isPresent() && !oneByLogin.get().getLogin().equals(newLogin))
             throw new LoginAlreadyInUseException(newLogin);
-
-        User newUser = new User(null, newLogin, newPassword);
+//, context.getUser().getRole() == User.RoleEnum.Admin ? User.RoleEnum.Admin : User.RoleEnum.User
+        User newUser = new User(id, newLogin, newPassword, null);
         UserValidator.validate(newUser);
 
         return userStorage.updateById(id, newUser);
@@ -115,11 +115,11 @@ public class UserService implements Service {
             });
     }
 
-    public void login(User user) throws UserNotFoundException, PasswordsDoNotMatchException, UserValidationException, SQLException {
+    public void login(User user) throws ApplicationException, SQLException {
         login(user.getLogin(), user.getPassword());
     }
 
-    public void login(String login, String password) throws UserNotFoundException, PasswordsDoNotMatchException, UserValidationException, SQLException {
+    public void login(String login, String password) throws ApplicationException, SQLException {
         User user = new User(login, password);
         UserValidator.validate(user);
 

@@ -27,10 +27,10 @@ public interface Mapper<T extends Entity> {
                 } else if (annotation.annotationType().equals(ForeignKey.class)) {
                     Class<?> superclass = field.getType().getSuperclass();
                     String ref = ((ForeignKey) annotation).linkTo();
-                    Field field1 = superclass.getDeclaredField(ref);
-                    field1.setAccessible(true);
+                    Field pk = superclass.getDeclaredField(ref);
+                    pk.setAccessible(true);
                     field.setAccessible(true);
-                    v = field1.get(field.get(object));
+                    v = pk.get(field.get(object));
                 }
                 if (v != null)
                     preparedStatement.setObject(++counter, v);

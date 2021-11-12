@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class Controller {
 
     private Scanner scanner = new Scanner(System.in);
-    private final ApplicationContext context = new ApplicationContext();
-    private final Services services = new Services(context);
+    private final ApplicationContext context = ApplicationContext.getInstance();
+    private final Services services = Services.getInstance(context);
     private final MenuManager menuManager = new MenuManager(MenusEnum.MainMenu, services);
     private static Controller instance;
 

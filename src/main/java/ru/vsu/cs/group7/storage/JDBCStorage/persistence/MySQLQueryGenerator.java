@@ -1,7 +1,5 @@
 package ru.vsu.cs.group7.storage.JDBCStorage.persistence;
 
-import org.antlr.v4.runtime.misc.Pair;
-import org.apache.commons.lang3.StringUtils;
 import ru.vsu.cs.group7.model.Entity;
 import ru.vsu.cs.group7.storage.JDBCStorage.annotations.Column;
 import ru.vsu.cs.group7.storage.JDBCStorage.annotations.ForeignKey;
@@ -35,8 +33,8 @@ public class MySQLQueryGenerator {
         return String.format(
                 "INSERT INTO %s (%s) Values (%s)",
                 getTableName(clazz),
-                StringUtils.join(parts[0], ", "),
-                StringUtils.join(parts[1], ", ")
+                String.join(", ", parts[0]),
+                String.join(", ", parts[1])
         );
     }
 
@@ -71,7 +69,7 @@ public class MySQLQueryGenerator {
     public static <T extends Entity> String select(Class<T> clazz, Pair<String, Object> pair) {
         return select(clazz)
                 .append("WHERE ")
-                .append(pair.a).append("=").append(pair.b)
+                .append(pair.getFirst()).append("=").append(pair.getSecond())
                 .toString();
     }
 
@@ -84,7 +82,15 @@ public class MySQLQueryGenerator {
 
     public static <T extends Entity, ID> String update(T newData, ID id) {
         String collect = Arrays.stream(newData.getClass().getDeclaredFields())
-                .filter(field -> field.isAnnotationPresent(Column.class))
+                .filter(field -> {
+                    try {
+                        field.setAccessible(true);
+                        return field.isAnnotationPresent(Column.class) && field.get(newData) != null;
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    return false;
+                })
                 .map(field -> {
                     field.setAccessible(true);
                     try {

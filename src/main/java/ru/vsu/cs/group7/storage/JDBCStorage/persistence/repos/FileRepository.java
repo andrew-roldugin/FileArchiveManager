@@ -1,7 +1,7 @@
 package ru.vsu.cs.group7.storage.JDBCStorage.persistence.repos;
 
-import org.antlr.v4.runtime.misc.Pair;
 import ru.vsu.cs.group7.model.File;
+import ru.vsu.cs.group7.storage.JDBCStorage.persistence.Pair;
 import ru.vsu.cs.group7.storage.interfaces.FileStorage;
 
 import java.sql.SQLException;
